@@ -1,0 +1,117 @@
+* {
+    font-family: 'Comfortaa', cursive;
+    color: #333333;
+}
+
+#wrapper {
+    border: 1px solid black;
+    overflow: hidden;
+}
+#wrapperTutorial {
+    width: 80%;
+    height: 1000px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.description {
+    margin: 10%;
+    max-width: 40%;
+    float:left;
+}
+
+.homeButton {
+    background-color: white;
+    border-radius: 50px;
+    border-color: #333333;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 20px;
+    width: 230px;
+}
+
+.homeButton:hover {
+    background-color: #333333;
+    color: white;
+    transition: all .2s ease;
+ }
+
+ .homeButton:active {
+    background-color: white;
+    color: #333333;
+ }
+
+.mainLogo {
+    margin-top: -25px;
+    width: 450px;
+    padding-bottom: 40px;
+}
+
+h1 {
+    font-size: 65px;
+}
+
+
+.sideProfile {
+    overflow: hidden;
+    margin: 10%;
+    padding-left: 8%;
+    height: 510px;
+}
+
+h2 {
+    font-size: 40px;
+    padding-left: 2%;
+}
+
+p {
+    font-size: 20px;
+    line-height: 35px;
+    margin-bottom: 5%;
+}
+
+.tutorialVideo {
+    height: auto;
+    margin: auto;
+    float:left;
+}
+
+.tutorialText {
+    height: 405px;
+    margin-right: 8%;
+    width: 50%;
+    float: right;
+    overflow: hidden;
+}
+
+.tutorialTitle {
+    margin: auto;
+    margin-left: 35%;
+    padding-bottom: 50px;
+}
+
+iframe {
+    border-radius: 20px;
+}
+
+.profileButton {
+    background-color: white;
+    border-radius: 50px;
+    border-color: #e6e6e6;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 25px;
+    margin-top: 6%;
+    width: 300px;
+}
+
+.profileButton:hover {
+    background-color: #e6e6e6;
+    color: white;
+    transition: all .2s ease;
+ }
+
+ .profileButton:active {
+    background-color: white;
+    color: #e6e6e6;
+ }
