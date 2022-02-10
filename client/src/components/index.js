@@ -8,6 +8,7 @@ import Loading from './Loading';
 import Error from './Error';
 import ProjectList from './ProjectList';
 import PageHero from './PageHero';
+import Registration from './Registration';
 export {
   Navbar,
   Footer,
@@ -19,4 +20,5 @@ export {
   Error,
   ProjectList,
   PageHero,
+  Registration,
 };

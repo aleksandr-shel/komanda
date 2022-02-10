@@ -5,17 +5,18 @@ import App from './App';
 import Home from './Home/Home';
 import reportWebVitals from './reportWebVitals';
 import { ProjectsProvider } from './context/projects_context';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.render(
-<<<<<<< HEAD
   <ProjectsProvider>
-    <App />
+    <Auth0Provider
+      domain="dev-8nhix7k3.us.auth0.com"
+      clientId="qOHZS1OO4HyzYF5wFqIey6e5YTez8R76"
+      redirectUri={window.location.origin}
+    >
+      <App />
+    </Auth0Provider>
   </ProjectsProvider>,
-=======
-  <React.StrictMode>
-    <Home />
-  </React.StrictMode>,
->>>>>>> 9eb949978bf0db43023c2061f70e237e8c7a41ea
   document.getElementById('root')
 );
 

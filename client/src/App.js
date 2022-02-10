@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navbar, Sidebar, Footer } from './components';
+import { Navbar, Sidebar, Footer, Registration } from './components';
 import { Home, Projects, SingleProject, About, Error } from './pages';
 
 function App() {
   return (
     <Router>
       <Navbar />
+      <Registration />
       <Sidebar />
       <Routes>
         <Route exact path="/" element={<Home />} />
