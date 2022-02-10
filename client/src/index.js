@@ -2,13 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Home from './Home/Home';
 import reportWebVitals from './reportWebVitals';
 import { ProjectsProvider } from './context/projects_context';
 
 ReactDOM.render(
+<<<<<<< HEAD
   <ProjectsProvider>
     <App />
   </ProjectsProvider>,
+=======
+  <React.StrictMode>
+    <Home />
+  </React.StrictMode>,
+>>>>>>> 9eb949978bf0db43023c2061f70e237e8c7a41ea
   document.getElementById('root')
 );
 
