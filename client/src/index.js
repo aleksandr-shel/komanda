@@ -2,21 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Home from './Home/Home';
 import reportWebVitals from './reportWebVitals';
-import { ProjectsProvider } from './context/projects_context';
 import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.render(
-  <ProjectsProvider>
-    <Auth0Provider
-      domain="dev-8nhix7k3.us.auth0.com"
-      clientId="qOHZS1OO4HyzYF5wFqIey6e5YTez8R76"
-      redirectUri={window.location.origin}
-    >
-      <App />
-    </Auth0Provider>
-  </ProjectsProvider>,
+  <Auth0Provider
+    domain="dev-8nhix7k3.us.auth0.com"
+    clientId="qOHZS1OO4HyzYF5wFqIey6e5YTez8R76"
+    redirectUri={window.location.origin}
+  >
+    <App />
+  </Auth0Provider>,
   document.getElementById('root')
 );
 

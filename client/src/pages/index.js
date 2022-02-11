@@ -1,7 +1,3 @@
-import Home from './HomePage';
-import Projects from './ProjectsPage';
-import SingleProject from './SingleProjectPage';
-import About from './AboutPage';
-import Error from './ErrorPage';
+import Registration from './RegistrationPage';
 
-export { Home, Projects, SingleProject, About, Error };
+export { Registration };

@@ -1,11 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import logo from '../assets/logo.png';
-import { FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { links } from '../utils/constants';
-import { useProjectsContext } from '../context/projects_context';
-import { useUserContext } from '../context/user_context';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Registration = () => {
