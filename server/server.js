@@ -1,35 +1,34 @@
-
-let app = require('./config/app');
-let debug = require('debug')('api:server');
-let http = require('http');
+let app = require('./config/app')
+let debug = require('debug')('api:server')
+let http = require('http')
 
 /**
  * Get port from environment and store in Express.
  */
 
-let port = normalizePort(process.env.PORT || '5000');
-app.set('port', port);
+let port = normalizePort(process.env.PORT || '5000')
+app.set('port', port)
 
 /**
  * Create HTTP server.
  */
 
-let server = http.createServer(app);
+let server = http.createServer(app)
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+server.listen(port)
+server.on('error', onError)
+server.on('listening', onListening)
 
 /**
  * Normalize a port into a number, string, or false.
  */
 
 function normalizePort(val) {
-  let port = parseInt(val, 10);
+  let port = parseInt(val, 10)
 
   if (isNaN(port)) {
     // named pipe
@@ -41,7 +40,7 @@ function normalizePort(val) {
     return port;
   }
 
-  return false;
+  return false
 }
 
 /**
@@ -60,15 +59,15 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
+      console.error(bind + ' requires elevated privileges')
+      process.exit(1)
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
+      console.error(bind + ' is already in use')
+      process.exit(1)
+      break
     default:
-      throw error;
+      throw error
   }
 }
 
@@ -81,5 +80,5 @@ function onListening() {
   let bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  debug('Listening on ' + bind)
 }

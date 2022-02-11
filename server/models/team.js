@@ -1,5 +1,4 @@
-let mongoose = require('mongoose');
-
+let mongoose = require('mongoose')
 
 let Team = mongoose.Schema(
     {
@@ -21,8 +20,8 @@ let Team = mongoose.Schema(
             default: []
         }
     }, {
-        collection:"teams"
+        collection:'teams'
     }
 )
 
-module.exports = mongoose.model('Team', Team);
+module.exports = mongoose.model('Team', Team)

@@ -1,5 +1,4 @@
-let mongoose = require('mongoose');
-
+let mongoose = require('mongoose')
 
 let User = mongoose.Schema(
     {
@@ -16,8 +15,8 @@ let User = mongoose.Schema(
             default: []
         }
     }, {
-        collection:"user"
+        collection:'user'
     }
 )
 
-module.exports = mongoose.model('User', User);
+module.exports = mongoose.model('User', User)

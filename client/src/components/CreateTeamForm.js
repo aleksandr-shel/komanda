@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-
 export default function CreateTeamForm(){
 
 
@@ -15,4 +14,3 @@ export default function CreateTeamForm(){
 const FormContainer = styled.div`
     
 `;
-

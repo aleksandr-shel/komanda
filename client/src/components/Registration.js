@@ -4,14 +4,13 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect } from 'react';
 
 const Registration = () => {
-  const { isAuthenticated, loginWithRedirect, logout, user, isLoading } =
+  const { isAuthenticated, loginWithRedirect, logout, user} =
     useAuth0();
   const isUser = isAuthenticated && user;
 
   useEffect(()=>{
     console.log(user);
   }, [user])
-
 
   return (
     <Container>
@@ -63,4 +62,4 @@ const Container = styled.div`
     height: 2%;
   }
 `;
-export default Registration;
+export default Registration
