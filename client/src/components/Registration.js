@@ -1,11 +1,17 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useEffect } from 'react';
 
 const Registration = () => {
   const { isAuthenticated, loginWithRedirect, logout, user, isLoading } =
     useAuth0();
   const isUser = isAuthenticated && user;
+
+  useEffect(()=>{
+    console.log(user);
+  }, [user])
+
 
   return (
     <Container>
