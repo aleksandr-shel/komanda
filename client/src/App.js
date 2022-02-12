@@ -1,12 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Registration } from './pages';
+import TeamsPageTemporary from './pages/TeamsPageTemporary';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route exact path="/" element={<Registration />} />
+        <Route path="teams-page" element={<TeamsPageTemporary/>}/>
       </Routes>
     </Router>
   );
