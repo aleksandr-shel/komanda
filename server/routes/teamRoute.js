@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 
 const router = express.Router();
 
@@ -23,7 +22,7 @@ router.get('/', (req, res) => {
 
 //create team
 router.post('/create', (req, res) => {
-    const userId = mongoose.Types.ObjectId(req.body.teamOwner);
+    const userId = req.body.teamOwner;
 
     let newTeam = new Team({
         teamName: req.body.teamName,
@@ -44,7 +43,16 @@ router.post('/create', (req, res) => {
     })
 })
 
+//add team members
+router.post('/:teamId/add', (req, res) => {
+    const usersId = req.body.chosenUsers;
+    const teamId = req.body.teamId;
 
+    Team.updateOne(
+        { _id: teamId },
+        { $push: { users: usersId } }).exec();
+    res.send(usersId);
+})
 
 
 module.exports = router;

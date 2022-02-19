@@ -4,7 +4,7 @@ import CreateTeamForm from './../components/CreateTeamForm';
 import { useEffect } from "react";
 import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
-
+import AddTeamMembersForm from './../components/AddTeamMembersForm';
 
 export default function TeamsPageTemporary() {
 
@@ -15,8 +15,11 @@ export default function TeamsPageTemporary() {
     const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
 
     const [showCreateTeamForm, setShowCreateTeamForm] = useState(false);
-
     const [teamsList, setTeamsList] = useState([]);
+
+    const [showAddMembersForm, setShowAddMembersForm] = useState(false);
+
+    let [teamId, setTeamId] = useState();
 
     useEffect(() => {
         async function getUserTeams() {
@@ -46,11 +49,19 @@ export default function TeamsPageTemporary() {
                             <br />
                             Number of Projects: {team.projects.length}
                             <br />
+                            <button style={{ padding: '10px' }} onClick={() => {
+                                setShowAddMembersForm(!showAddMembersForm);
+                                setTeamId(team._id);
+                            }}>
+                                Add Member
+                            </button>
+                            <br />
                             <br />
                         </div>
                     )
                 })}
                 <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm} />
+                <AddTeamMembersForm toShow={showAddMembersForm} setToShow={setShowAddMembersForm} teamId={teamId} />
             </div>
         )
     } else {
