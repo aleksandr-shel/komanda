@@ -17,15 +17,24 @@ const Home = () => {
   return (
     <div>
     <div id='wrapper'>
+      {isUser && user.name && (
+        <p> Welcome, <strong>{user.name.toUpperCase()}</strong> </p>
+      )}
+        {isUser ? (
+        <button 
+            isAuthenticated 
+            className="loginButton"
+            onClick={() => { logout({ returnTo: window.location.origin });}}> Logout 
+        </button>
+        ) : (
+        <button onClick={loginWithRedirect} className='loginButton'>Login</button>)}
       <div className='description'>
+       
         <h1>Upgrade your project</h1>
         <img src={logo} className='mainLogo' alt="logo" />
         <p>Designed to improve your teamwork experience, komanda offers a wide range of possibilities when it comes to project management.</p>
         <p>All within a couple of clicks.</p>
-        {isUser ? (
-        <button isAuthenticated className=".hero-btn" onClick={() => { logout({ returnTo: window.location.origin });}}> logout </button>
-        ) : (
-        <button onClick={loginWithRedirect} className='homeButton'>Try Komanda</button>)}
+        <button onClick={loginWithRedirect} className='homeButton'>Try Komanda</button>
       </div>
       <div className = 'sideProfile'>
         <img src={homeProfile} className='homeProfilePic' alt="You Profile Picture" />

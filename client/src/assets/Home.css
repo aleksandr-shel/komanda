@@ -20,6 +20,28 @@
     float:left;
 }
 
+.loginButton {
+    margin-top: 2%;
+    background-color: white;
+    border-radius: 50px;
+    border-color: #333333;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 15px;
+    width: 150px;
+}
+
+.loginButton:hover {
+    background-color: #333333;
+    color: white;
+    transition: all .2s ease;
+ }
+
+ .loginButton:active {
+    background-color: white;
+    color: #333333;
+ }
+
 .homeButton {
     background-color: white;
     border-radius: 50px;
@@ -42,7 +64,7 @@
  }
 
 .mainLogo {
-    margin-top: -25px;
+    margin-top: 15px;
     width: 450px;
     padding-bottom: 40px;
 }
