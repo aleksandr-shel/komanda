@@ -6,17 +6,18 @@ let User = mongoose.Schema(
             type: String,
             default: '',
             trim: true,
-            required: 'mail is required',
+            required: 'email is required',
             unique: true,
             dropDups: true
         },
-        teams:{
-            type: [String],
+        teams: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "Team",
             default: []
         }
     }, {
-        collection:'user'
-    }
+    collection: 'user'
+}
 )
 
 module.exports = mongoose.model('User', User)

@@ -1,5 +1,5 @@
 const express = require('express');
-
+const mongoose = require('mongoose');
 
 const router = express.Router();
 
@@ -8,22 +8,22 @@ let Team = require('../models/team');
 let User = require('../models/user');
 
 //get all teams, there is no teams yet
-router.get('/', (req,res)=>{
+router.get('/', (req, res) => {
 
-    Team.find((err, teams)=>{
-        if(err){
-          console.log(err)
-          res.send('error occured' + err);
+    Team.find((err, teams) => {
+        if (err) {
+            console.log(err)
+            res.send('error occured' + err);
         } else {
-          res.send(teams);
+            res.send(teams);
         }
-      })
+    })
 
 })
 
 //create team
-router.post('/create', (req,res)=>{
-    const userId = req.body.teamOwner;
+router.post('/create', (req, res) => {
+    const userId = mongoose.Types.ObjectId(req.body.teamOwner);
 
     let newTeam = new Team({
         teamName: req.body.teamName,
@@ -31,14 +31,14 @@ router.post('/create', (req,res)=>{
         users: [userId]
     })
 
-    Team.create(newTeam, (err, team)=>{
-        if (err){
+    Team.create(newTeam, (err, team) => {
+        if (err) {
             res.send(err);
-        }else {
+        } else {
             //adding team id to the user's teams array
             User.updateOne(
-                {_id:userId}, 
-                {$push:{teams: team._id}}).exec();
+                { _id: userId },
+                { $push: { teams: team._id } }).exec();
             res.send(team);
         }
     })

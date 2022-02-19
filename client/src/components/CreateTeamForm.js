@@ -4,15 +4,16 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useState } from "react";
 import axios from 'axios';
 
+const mongoose = require('mongoose');
 
-export default function CreateTeamForm({toShow, setToShow}){
-    const {user} = useAuth0();
+export default function CreateTeamForm({ toShow, setToShow }) {
+    const { user } = useAuth0();
 
-    const userId = user?.sub?.split('|')[1] || '';
+    const userId = mongoose.Types.ObjectId(user?.sub?.split('|')[1]);
 
     const [teamName, setTeamName] = useState();
-    async function handleCreateTeamButton(){
-        const result = await axios.post('/api/teams/create',{
+    async function handleCreateTeamButton() {
+        const result = await axios.post('/api/teams/create', {
             teamName,
             teamOwner: userId,
         })
@@ -21,14 +22,14 @@ export default function CreateTeamForm({toShow, setToShow}){
     }
 
     return (
-        <FormContainer style={{display: toShow ? 'flex':'none'}}>
+        <FormContainer style={{ display: toShow ? 'flex' : 'none' }}>
             <div className="form-container">
                 <h1>Create a Team</h1>
                 <input
                     value={teamName}
-                    onChange={(e)=>setTeamName(e.target.value)}
+                    onChange={(e) => setTeamName(e.target.value)}
                     type="text"
-                    placeholder="Team Name"/>
+                    placeholder="Team Name" />
                 <button onClick={handleCreateTeamButton}>Create Team</button>
             </div>
         </FormContainer>

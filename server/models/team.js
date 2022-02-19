@@ -7,21 +7,23 @@ let Team = mongoose.Schema(
             default: '',
             required: 'Team name is required'
         },
-        teamOwner:{
-            type: String,
+        teamOwner: {
+            type: mongoose.Schema.Types.ObjectId,
             default: ''
         },
-        users:{
-            type: [String],
+        users: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "User",
             default: []
-        }, 
-        projects:{
-            type: [String],
+        },
+        projects: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "Project",
             default: []
         }
     }, {
-        collection:'teams'
-    }
+    collection: 'teams'
+}
 )
 
 module.exports = mongoose.model('Team', Team)
