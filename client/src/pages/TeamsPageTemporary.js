@@ -10,9 +10,9 @@ export default function TeamsPageTemporary() {
 
     const { user } = useAuth0();
 
-    let isUserAuthenticated = useAuth0().isAuthenticated;
+    let { isAuthenticated } = useAuth0();
 
-    const userId = isUserAuthenticated ? user?.sub.split('|')[1] : null;
+    const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
 
     const [showCreateTeamForm, setShowCreateTeamForm] = useState(false);
 
@@ -28,17 +28,25 @@ export default function TeamsPageTemporary() {
         getUserTeams();
     }, [userId, showCreateTeamForm])
 
-    if (isUserAuthenticated) {
+    if (isAuthenticated) {
         return (
             <div>
                 <button style={{ padding: '10px' }} onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
                     Create Team
                 </button>
-                <h3>Teams ids:</h3>
-                {teamsList.map((item, index) => {
+                <h3>Teams:</h3>
+                {teamsList.map((team, index) => {
                     return (
                         <div key={index}>
-                            {index + 1}) {item}
+                            Team Name: {team.teamName}
+                            <br />
+                            Team Owner: {team.teamOwner}
+                            <br />
+                            Number of Users: {team.users.length}
+                            <br />
+                            Number of Projects: {team.projects.length}
+                            <br />
+                            <br />
                         </div>
                     )
                 })}
