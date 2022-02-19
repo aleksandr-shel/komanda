@@ -6,37 +6,51 @@ import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 
 
-export default function TeamsPageTemporary(){
+export default function TeamsPageTemporary() {
 
-    const {user} = useAuth0();
+    const { user } = useAuth0();
 
-    const userId = user?.sub.split('|')[1];
+    let isUserAuthenticated = useAuth0().isAuthenticated;
+
+    const userId = isUserAuthenticated ? user?.sub.split('|')[1] : null;
 
     const [showCreateTeamForm, setShowCreateTeamForm] = useState(false);
 
     const [teamsList, setTeamsList] = useState([]);
 
-    useEffect(async ()=>{
-        if (userId) {
-            const result = await axios.get(`/api/users/${userId}/teams`)
-            setTeamsList(result.data);
+    useEffect(() => {
+        async function getUserTeams() {
+            if (userId) {
+                const result = await axios.get(`/api/users/${userId}/teams`)
+                setTeamsList(result.data);
+            }
         }
+        getUserTeams();
     }, [userId, showCreateTeamForm])
-    
-    return(
-        <div>
-            <button style={{padding:'10px'}} onClick={()=>setShowCreateTeamForm(!showCreateTeamForm)}>
-                Create Team
-            </button>
-            <h3>Teams ids:</h3>
-            {teamsList.map((item, index)=>{
-                return(
-                    <div key={index}>
-                        {index + 1}) {item}
-                    </div>
-                )
-            })}
-            <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm}/>
-        </div>
-    )
+
+    if (isUserAuthenticated) {
+        return (
+            <div>
+                <button style={{ padding: '10px' }} onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
+                    Create Team
+                </button>
+                <h3>Teams ids:</h3>
+                {teamsList.map((item, index) => {
+                    return (
+                        <div key={index}>
+                            {index + 1}) {item}
+                        </div>
+                    )
+                })}
+                <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm} />
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <p>Please log in</p>
+            </div>
+        )
+    }
+
 }
