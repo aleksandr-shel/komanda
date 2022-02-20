@@ -1,0 +1,114 @@
+* {
+    font-family: 'Comfortaa', cursive;
+    color: #333333;
+}
+
+#wrapper {
+    border: 1px solid black;
+    overflow: hidden;
+}
+#wrapperTutorial {
+    width: 80%;
+    height: 1000px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.sideBar {
+    float: left;
+    margin: 10%;
+    margin-top: 5%;
+    max-width: 40%;
+}
+.userpic{
+    margin-bottom: 10%;
+    margin-left: 80px;
+    width: 150px;
+}
+.teams {
+    display: inline-block;
+        margin: 10%;
+    max-width: 960px;
+    max-height: 510px;
+    margin-top: 13%;
+    overflow-y: scroll;
+}
+
+.team {
+    display: inline-block;
+    width: 450px;
+    height: 250px;
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+}
+
+.addTeam {
+    width: 450px;
+    height: 250px;
+    background-color: #e6e6e6;
+    border-color: #333333;
+    border-style: dashed;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+}
+
+.buttonList {
+    width: 300px;
+}
+
+.username{
+    margin: 0;
+    max-width:300px;
+    text-align: center;
+    display:inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.createButton {
+    background-color: white;
+    border-radius: 50px;
+    border-color: #333333;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 30px;
+    width: 300px;
+    margin-top: 30px;
+}
+
+.createButton:hover {
+    background-color: #333333;
+    color: white;
+    transition: all .2s ease;
+ }
+
+ .createButton:active {
+    background-color: white;
+    color: #333333;
+ }
+
+ .elseButton {
+    background-color: white;
+    border-radius: 50px;
+    border-color: #e6e6e6;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 30px;
+    width: 300px;
+    margin-top: 30px;
+}
+
+.elseButton:hover {
+    background-color: #e6e6e6;
+    color: white;
+    transition: all .2s ease;
+ }
+
+ .elseButton:active {
+    background-color: white;
+    color: #e6e6e6;
+ }

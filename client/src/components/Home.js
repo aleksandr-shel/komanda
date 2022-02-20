@@ -27,7 +27,6 @@ const Home = () => {
         ) : (
         <button onClick={loginWithRedirect} className='loginButton'>Login</button>)}
       <div className='description'>
-       
         <h1>Upgrade your project</h1>
         <img src={logo} className='mainLogo' alt="logo" />
         <p>Designed to improve your teamwork experience, komanda offers a wide range of possibilities when it comes to project management.</p>

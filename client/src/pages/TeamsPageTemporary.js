@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import CreateTeamForm from './../components/CreateTeamForm';
+import '../assets/Teams.css'
 import { useEffect } from "react";
 import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -33,14 +34,18 @@ export default function TeamsPageTemporary() {
 
     if (isAuthenticated) {
         return (
-            <div>
-                <button style={{ padding: '10px' }} onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
+        <div>
+            <div id='wrapper'>
+                <button className="createButton" onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
                     Create Team
                 </button>
-                <h3>Teams:</h3>
+               
+                    <h3>Teams:</h3>
+                <div className="teams">
+                <div className="addTeam"></div>
                 {teamsList.map((team, index) => {
                     return (
-                        <div key={index}>
+                        <div className="team" key={index}>
                             Team Name: {team.teamName}
                             <br />
                             Team Owner: {team.teamOwner}
@@ -59,9 +64,20 @@ export default function TeamsPageTemporary() {
                             <br />
                         </div>
                     )
-                })}
+                })}</div>
+                <div className="sideBar">
+                    <img className="userpic" src={user.picture} alt={user.name} />
+                    <br/>
+                    <h2 className="username">{user.name.toUpperCase()}</h2>
+                    <div className="buttonList">
+                        <button className="elseButton">Profile</button>
+                        <button className="createButton">Teams </button>
+                        <button className="elseButton">Sign Out</button>
+                    </div>
+                </div>
                 <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm} />
                 <AddTeamMembersForm toShow={showAddMembersForm} setToShow={setShowAddMembersForm} teamId={teamId} />
+                </div>
             </div>
         )
     } else {
