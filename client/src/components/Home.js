@@ -17,9 +17,7 @@ const Home = () => {
   return (
     <div>
     <div id='wrapper'>
-      {isUser && user.name && (
-        <p> Welcome, <strong>{user.name.toUpperCase()}</strong> </p>
-      )}
+     
         {isUser ? (
         <button 
             isAuthenticated 
@@ -38,7 +36,10 @@ const Home = () => {
       </div>
       <div className = 'sideProfile'>
         <img src={homeProfile} className='homeProfilePic' alt="You Profile Picture" />
-        <h2>You! Yes, you!</h2>
+        {isUser && user.name ? 
+        (<h2 className='loggedUserName'>{user.name.toUpperCase()}</h2>) 
+        : (<h2>You! Yes, you!</h2>)}
+       
         <button className='profileButton'>Profile</button>
       </div>
       <div id='wrapperTutorial'>
