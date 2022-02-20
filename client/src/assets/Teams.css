@@ -28,7 +28,7 @@
 .teams {
     display: inline-block;
         margin: 10%;
-    max-width: 960px;
+    max-width: 1000px;
     max-height: 510px;
     margin-top: 13%;
     overflow-y: scroll;
@@ -44,15 +44,34 @@
     padding: 20px;
 }
 
+.plusSign {
+    margin-top: 30px;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.addText {
+    text-align: center;
+    margin: auto;
+}
+
 .addTeam {
+    float: left;
     width: 450px;
     height: 250px;
     background-color: #e6e6e6;
     border-color: #333333;
     border-style: dashed;
+    border-width: thin;
     border-radius: 10px;
     margin: 10px;
     padding: 20px;
+}
+
+.addTeam:hover {
+    background-color: #33333352;
+    color: white;
+    transition: all .2s ease;
 }
 
 .buttonList {

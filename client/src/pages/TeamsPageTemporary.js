@@ -36,13 +36,16 @@ export default function TeamsPageTemporary() {
         return (
         <div>
             <div id='wrapper'>
-                <button className="createButton" onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
+                <button className="createButton" >
                     Create Team
                 </button>
                
                     <h3>Teams:</h3>
                 <div className="teams">
-                <div className="addTeam"></div>
+                <div className="addTeam" onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
+                    <h1 className="plusSign">+</h1>
+                    <h2 className="addText"> Add New Team</h2>
+                </div>
                 {teamsList.map((team, index) => {
                     return (
                         <div className="team" key={index}>
