@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
     Team.find((err, teams) => {
         if (err) {
             console.log(err)
-            res.send('error occured' + err);
+            res.send('error occurred' + err);
         } else {
             res.send(teams);
         }
@@ -48,10 +48,18 @@ router.post('/:teamId/add', (req, res) => {
     const usersId = req.body.chosenUsers;
     const teamId = req.body.teamId;
 
+    //update teams array under every user in the array
+    usersId.forEach((userId) => {
+        User.updateOne(
+            { _id: userId },
+            { $push: { teams: teamId } }).exec();
+    })
+
     Team.updateOne(
         { _id: teamId },
         { $push: { users: usersId } }).exec();
     res.send(usersId);
+
 })
 
 
