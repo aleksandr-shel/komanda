@@ -55,7 +55,7 @@ export default function TeamsPageTemporary() {
                                             (<p>Owner: {team.teamOwner}</p>)}
                                         <p>Number of Users: {team.users.length}</p>
                                         <br />
-                                        <button className="addMemberButton" onClick={() => {
+                                        <button className="teamMembersButton" onClick={() => {
                                             setShowChangeMembersForm(!showChangeMembersForm);
                                             setTeamId(team._id);
                                         }}>
@@ -78,7 +78,7 @@ export default function TeamsPageTemporary() {
                         </div>
                     </div>
                     <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm} />
-                    <ChangeTeamMembersForm toShow={showChangeMembersForm} setToShow={setShowChangeMembersForm} teamId={teamId} />
+                    <ChangeTeamMembersForm toShow={showChangeMembersForm} setToShow={setShowChangeMembersForm} teamId={teamId} userId={userId} />
                 </div>
             </div>
         )

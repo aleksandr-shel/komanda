@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-export default function ChangeTeamMembersForm({ toShow, setToShow, teamId }) {
-
+export default function ChangeTeamMembersForm({ toShow, setToShow, teamId, userId }) {
     let [usersList, setUsersList] = useState([]);
     useEffect(() => {
         axios.get('/api/users')
@@ -62,35 +61,57 @@ export default function ChangeTeamMembersForm({ toShow, setToShow, teamId }) {
         setToShow(false);
     }
 
+    function renderUsersList() {
+        if (userId === teamOwner) {
+            return (
+                usersList.map((user, index) => {
+                    return (
+                        <div key={index}>
+                            {chosenUsers.includes(user._id) && teamOwner !== user._id
+                                ?
+                                <>
+                                    <input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} checked />
+                                    <label htmlFor={user._id}>{user.email}</label>
+                                </>
+                                : chosenUsers.includes(user._id) && teamOwner === user._id
+                                    ? <></>
+                                    :
+                                    <>
+                                        <input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} />
+                                        <label htmlFor={user._id}>{user.email}</label>
+                                    </>
+
+                            }
+                        </div >
+                    )
+                })
+            )
+        } else {
+            return (
+                initialTeamMembers.map((user, index) => {
+                    return (
+                        <div key={index}>
+                            {user}
+                        </div>
+                    )
+                }))
+        }
+    }
+
     return (
         <FormContainer style={{ display: toShow ? 'flex' : 'none' }}>
             <div className="form-container">
                 <h1>Choose a Person</h1>
 
-                <form>
-                    <div>
-
-                        {usersList.map((user, index) => {
-                            return (
-                                <div key={index}>
-                                    {chosenUsers.includes(user._id) && teamOwner !== user._id
-                                        ? < input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} checked />
-                                        : chosenUsers.includes(user._id) && teamOwner === user._id
-                                            ? < input type="hidden" id={user._id} value={user._id} />
-                                            : < input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} />
-                                    }
-                                    <label htmlFor={user._id}>{user.email}</label>
-                                    <br />
-                                </div>
-                            )
-                        })}
-
-                    </div>
-                </form>
-
-                <button onClick={handleAddMembersButton}>Change Team Composition</button>
+                <div>
+                    {renderUsersList()}
+                </div>
+                {userId === teamOwner
+                    ? < button onClick={handleAddMembersButton}>Change Team Composition</button>
+                    : < button onClick={() => setToShow(false)} >Close</button>
+                }
             </div>
-        </FormContainer>
+        </FormContainer >
     )
 }
 
@@ -99,40 +120,41 @@ const FormContainer = styled.div`
     position: absolute;
     top:0;
     left:0;
-    opacity: 0.8;
     filter: alpha(opacity=60);
     display: flex;
-    background-color: #ddd;
     min-height: 100vh;
     min-width: 100%;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(3px);
     
     .form-container{
         background-color: white;
+        border: 2px solid black;
         border-radius: 8px;
         min-width: 300px;
-        max-width: 800px;
+        max-width: 100%;
+        min-height: 40vh;
         padding: 32px;
     }
 
     button, input{
+        border: 1px solid black;
         border-radius: 8px;
-        box-sizing: border-box;
-        display: block;
+        display: inline-block;
         font-size: 16px;
-        margin: 8px 0;
         padding: 8px;
-        width: 100%;
     }
 
     input{
-        border: 1px solid black;
+        margin: 14px 20px;
+        padding: 8px;
     }
 
     button{
-        border: 1px solid black;
         cursor: pointer;
+        margin: 8px 0;
+        width: 100%;
     }
 
 `;
