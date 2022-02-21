@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-//const mongoose = require('mongoose');
-
-export default function AddTeamMembersForm({ toShow, setToShow, teamId }) {
+export default function ChangeTeamMembersForm({ toShow, setToShow, teamId }) {
 
     let [usersList, setUsersList] = useState([]);
     useEffect(() => {
@@ -14,8 +12,24 @@ export default function AddTeamMembersForm({ toShow, setToShow, teamId }) {
             .catch(err => console.log(err));
     }, [])
 
+    let [initialTeamMembers, setInitialTeamMembers] = useState([]); //array of initial team members
     let [chosenUsers, setChosenUsers] = useState([]);
+    let [teamOwner, setTeamOwner] = useState();
+    useEffect(() => {
+        if (teamId) {
+            axios.get(`/api/teams/${teamId}/users`)
+                .then(res => {
+                    const { usersArrayTemp, teamOwnerTemp } = res.data;
 
+                    setInitialTeamMembers(usersArrayTemp);
+                    setChosenUsers(usersArrayTemp);
+
+                    setTeamOwner(teamOwnerTemp);
+                })
+        }
+    }, [teamId])
+
+    //USED FOR DEBUGGING
     /*useEffect(() => {
         console.log("chosenUsers: " + chosenUsers)
     }, [chosenUsers])*/
@@ -27,13 +41,22 @@ export default function AddTeamMembersForm({ toShow, setToShow, teamId }) {
         } else {
             updatedList.splice(chosenUsers.indexOf(event.target.value), 1);
         }
+
         setChosenUsers(updatedList);
     };
 
     async function handleAddMembersButton() {
-        const result = await axios.post(`/api/teams/${teamId}/add`, {
+        //in chosenUsers but not in the initialTeamMembers
+        let usersToAdd = chosenUsers.filter(x => !initialTeamMembers.includes(x));
+
+        //in initialTeamMembers array but not in chosenUsers
+        let usersToRemove = initialTeamMembers.filter(x => !chosenUsers.includes(x));
+
+        const result = await axios.post(`/api/teams/${teamId}/changeMembers`, {
             chosenUsers,
-            teamId
+            teamId,
+            usersToAdd,
+            usersToRemove
         })
         console.log(result.data);
         setToShow(false);
@@ -50,7 +73,12 @@ export default function AddTeamMembersForm({ toShow, setToShow, teamId }) {
                         {usersList.map((user, index) => {
                             return (
                                 <div key={index}>
-                                    <input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} />
+                                    {chosenUsers.includes(user._id) && teamOwner !== user._id
+                                        ? < input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} checked />
+                                        : chosenUsers.includes(user._id) && teamOwner === user._id
+                                            ? < input type="hidden" id={user._id} value={user._id} />
+                                            : < input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} />
+                                    }
                                     <label htmlFor={user._id}>{user.email}</label>
                                     <br />
                                 </div>
@@ -60,7 +88,7 @@ export default function AddTeamMembersForm({ toShow, setToShow, teamId }) {
                     </div>
                 </form>
 
-                <button onClick={handleAddMembersButton}>Add a Team Member</button>
+                <button onClick={handleAddMembersButton}>Change Team Composition</button>
             </div>
         </FormContainer>
     )

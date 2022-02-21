@@ -2,6 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
+const mongoose = require('mongoose');
+
 let Team = require('../models/team');
 
 let User = require('../models/user');
@@ -43,24 +45,46 @@ router.post('/create', (req, res) => {
     })
 })
 
-//add team members
-router.post('/:teamId/add', (req, res) => {
-    const usersId = req.body.chosenUsers;
+//change team members (add or remove)
+router.post('/:teamId/changeMembers', (req, res) => {
+    const chosenUsers = req.body.chosenUsers;
     const teamId = req.body.teamId;
+    const usersToAdd = req.body.usersToAdd;
+    const usersToRemove = req.body.usersToRemove;
 
-    //update teams array under every user in the array
-    usersId.forEach((userId) => {
+    //add teamId to the teams array under every user in usersToAdd array
+    usersToAdd.forEach((userId) => {
         User.updateOne(
             { _id: userId },
             { $push: { teams: teamId } }).exec();
     })
 
+    //remove teamID from the teams array under every user in usersToRemove array
+    usersToRemove.forEach((userId) => {
+        User.updateOne(
+            { _id: userId },
+            { $pull: { teams: teamId } }).exec();
+    })
+
     Team.updateOne(
         { _id: teamId },
-        { $push: { users: usersId } }).exec();
-    res.send(usersId);
+        { users: chosenUsers }).exec();
+    res.send(chosenUsers);
 
 })
 
+router.get('/:teamId/users', (req, res) => {
+    Team.findById(req.params.teamId, (err, team) => {
+        if (err) {
+            console.log(err);
+            res.send('error occurred' + err);
+        } else {
+            res.send({
+                usersArrayTemp: team.users,
+                teamOwnerTemp: team.teamOwner
+            });
+        }
+    })
+})
 
 module.exports = router;
