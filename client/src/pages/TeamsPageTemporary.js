@@ -7,6 +7,7 @@ import axios from 'axios';
 //import crown from '../assets/images/crown.svg'
 import { useAuth0 } from "@auth0/auth0-react";
 import ChangeTeamMembersForm from '../components/ChangeTeamMembersForm';
+import { AiOutlineCrown } from "react-icons/ai"
 
 export default function TeamsPageTemporary() {
 
@@ -51,7 +52,7 @@ export default function TeamsPageTemporary() {
                                         <h2 className="teamName">{team.teamName}</h2>
                                         <br />
                                         {userId === team.teamOwner ?
-                                            (<p>Owner: {team.teamOwner} (You)</p>) :
+                                            (<p>Owner: <AiOutlineCrown size={24} /></p>) :
                                             (<p>Owner: {team.teamOwner}</p>)}
                                         <p>Number of Users: {team.users.length}</p>
                                         <br />
