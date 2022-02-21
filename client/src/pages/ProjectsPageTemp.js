@@ -1,12 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import CreateTeamForm from './../components/CreateTeamForm';
-import '../assets/Teams.css'
+import '../assets/Projects.css'
 import { useEffect } from "react";
 import axios from 'axios';
 //import crown from '../assets/images/crown.svg'
 import { useAuth0 } from "@auth0/auth0-react";
-import AddTeamMembersForm from './../components/AddTeamMembersForm';
 
 export default function TeamsPageTemporary() {
 
@@ -37,35 +35,21 @@ export default function TeamsPageTemporary() {
         return (
         <div>
             <div id='wrapper'>
-                <div className="teams">
-                <h1>Your Current Teams:</h1>
-                <h5>Here is a list of teams that you are a part of...</h5>
-                <div className="listofteams">
-                <div className="addTeam" onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
+                <div className="projects">
+                <h1>/Team Name\ Projects</h1>
+                <h5>Here is a list of projects created by /Team Name\...</h5>
+                <div className="listofproject">
+                <div className="addProject">
                     <h1 className="plusSign">+</h1>
-                    <h2 className="addText"> Add New Team</h2>
+                    <h2 className="addText"> Add New Project</h2>
                 </div>
-                {teamsList.map((team, index) => {
-                    return (
-                        <div className="team" key={index}>
-                            <h2 className="teamName">{team.teamName}</h2>
-                            <br />
-                            {userId === team.teamOwner ? 
-                            (<p>Owner: {team.teamOwner} (You)</p>) : 
-                            (<p>Owner: {team.teamOwner}</p>)}
-                            <p>Number of Users: {team.users.length}</p>
-                            <br />
-                            <button className="addMemberButton" onClick={() => {
-                                setShowAddMembersForm(!showAddMembersForm);
-                                setTeamId(team._id);
-                            }}>
-                                Add Member
-                            </button>
-                            <br />
-                            <br />
+                <div className="project">
+                    <h2 className="projectName">Project Name</h2>
+                    <br />
+                    <p>/Team Name\</p>
+                    <br /><br /><br />
                         </div>
-                    )
-                })}</div>
+                </div>
                 </div>
                 <div className="sideBar">
                     <img className="userpic" src={user.picture} alt={user.name} />
@@ -73,12 +57,10 @@ export default function TeamsPageTemporary() {
                     <h2 className="username">{user.name.toUpperCase()}</h2>
                     <div className="buttonList">
                         <button className="elseButton">Profile</button>
-                        <button className="createButton">Teams </button>
+                        <button className="createButton">Projects </button>
                         <button className="elseButton">Sign Out</button>
                     </div>
                 </div>
-                <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm} />
-                <AddTeamMembersForm toShow={showAddMembersForm} setToShow={setShowAddMembersForm} teamId={teamId} />
                 </div>
             </div>
         )

@@ -29,19 +29,19 @@ h5{
     width: 150px;
 }
 
-.teams{
+.projects{
     display: inline-block;
     margin: 10%;
     margin-top: 10%;
 }
-.listofteams {
+.listofprojects {
     max-width: 1000px;
     max-height: 550px;
     margin-top: 5%;
     overflow-y: scroll;
 }
 
-.team {
+.project {
     display: inline-block;
     width: 450px;
     height: 250px;
@@ -67,7 +67,7 @@ h5{
     font-size: 40px;
 }
 
-.addTeam {
+.addProject {
     float: left;
     width: 450px;
     height: 250px;
@@ -100,7 +100,7 @@ h5{
     text-overflow: ellipsis;
 }
 
-.teamName{
+.projectName{
     margin-left: 5px;
     margin-top: 5px;
     font-size: 40px;
