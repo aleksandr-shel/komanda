@@ -41,17 +41,17 @@ const FormContainer = styled.div`
     position: absolute;
     top:0;
     left:0;
-    opacity: 0.8;
     filter: alpha(opacity=60);
     display: flex;
-    background-color: #ddd;
     min-height: 100vh;
     min-width: 100%;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(3px);
     
     .form-container{
         background-color: white;
+        border: 2px solid black;
         border-radius: 8px;
         min-width: 300px;
         max-width: 800px;
@@ -59,22 +59,22 @@ const FormContainer = styled.div`
     }
 
     button, input{
+        border: 1px solid black;
         border-radius: 8px;
-        box-sizing: border-box;
-        display: block;
+        display: inline-block;
         font-size: 16px;
-        margin: 8px 0;
         padding: 8px;
-        width: 100%;
     }
 
     input{
-        border: 1px solid black;
+        margin: 14px 20px 14px 0px;
+        padding: 8px;
     }
 
     button{
-        border: 1px solid black;
         cursor: pointer;
+        margin: 8px 0;
+        width: 100%;
     }
 
 `;
