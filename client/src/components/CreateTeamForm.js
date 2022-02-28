@@ -22,8 +22,8 @@ export default function CreateTeamForm({ toShow, setToShow }) {
     }
 
     return (
-        <FormContainer style={{ display: toShow ? 'flex' : 'none' }}>
-            <div className="form-container">
+        <FormContainer style={{ display: toShow ? 'flex' : 'none' }} onClick={()=>setToShow(false)}>
+            <div className="form-container" onClick={e=>e.stopPropagation()}>
                 <h1>Create a Team</h1>
                 <input
                     value={teamName}

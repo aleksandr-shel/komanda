@@ -99,8 +99,8 @@ export default function ChangeTeamMembersForm({ toShow, setToShow, teamId, userI
     }
 
     return (
-        <FormContainer style={{ display: toShow ? 'flex' : 'none' }}>
-            <div className="form-container">
+        <FormContainer style={{ display: toShow ? 'flex' : 'none' }} onClick={()=>setToShow(false)}>
+            <div className="form-container" onClick={e=>e.stopPropagation()}>
                 <h1>Choose a Person</h1>
 
                 <div>
