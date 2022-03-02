@@ -1,15 +1,10 @@
-const express = require('express');
 
-const router = express.Router();
-
-const mongoose = require('mongoose');
 
 let Team = require('../models/team');
 
 let User = require('../models/user');
 
-//get all teams, there is no teams yet
-router.get('/', (req, res) => {
+const getTeams = async (req, res) => {
 
     Team.find((err, teams) => {
         if (err) {
@@ -20,10 +15,10 @@ router.get('/', (req, res) => {
         }
     })
 
-})
+}
 
-//create team
-router.post('/create', (req, res) => {
+
+const createTeam = async (req, res) => {
     const userId = req.body.teamOwner;
 
     let newTeam = new Team({
@@ -43,10 +38,10 @@ router.post('/create', (req, res) => {
             res.send(team);
         }
     })
-})
+}
 
-//change team members (add or remove)
-router.post('/:teamId/changeMembers', (req, res) => {
+
+const changeTeamMembers = async (req, res) => {
     const chosenUsers = req.body.chosenUsers;
     const teamId = req.body.teamId;
     const usersToAdd = req.body.usersToAdd;
@@ -71,9 +66,10 @@ router.post('/:teamId/changeMembers', (req, res) => {
         { users: chosenUsers }).exec();
     res.send(chosenUsers);
 
-})
+}
 
-router.get('/:teamId/users', (req, res) => {
+
+const getTeamMembers = async (req, res) => {
     Team.findById(req.params.teamId, (err, team) => {
         if (err) {
             console.log(err);
@@ -85,6 +81,20 @@ router.get('/:teamId/users', (req, res) => {
             });
         }
     })
-})
+}
 
-module.exports = router;
+
+//delete a Team
+const deleteTeam = async (req,res)=>{
+    //when deleting a team there is a chain of deleting: 
+    //1) delete projects
+    //2) delete tasks 
+    //3) delete any reference id to this team for each user
+    //and so on
+}
+module.exports = {
+    getTeams,
+    createTeam,
+    changeTeamMembers,
+    getTeamMembers
+}

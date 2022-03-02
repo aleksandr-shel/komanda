@@ -15,8 +15,8 @@ mongoDB.once('open',()=>{
     console.log('Connected to MongoDB...')
 })
 
-let usersRoute = require('../routes/userRoute')
-let teamsRoute = require('../routes/teamRoute')
+let usersRoute = require('../routes/users.routes')
+let teamsRoute = require('../routes/teams.routes')
 
 let app = express()
 
