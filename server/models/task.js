@@ -21,7 +21,7 @@ let Task = mongoose.Schema(
         },
         deadline:{
             type:Date,
-            default: Date.now
+            default:Date.now
         },
         assignedUsers: {
             type: [mongoose.Schema.Types.ObjectId],

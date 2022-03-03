@@ -81,6 +81,17 @@ const getTeamMembers = async (req, res) => {
     })
 }
 
+const getTeam = async (req,res)=>{
+    const {teamId} = req.params;
+    Team.findById({_id:teamId}, (err, team)=>{
+        if (err){
+            res.status(400).send(err);
+        }
+
+        res.status(200).send(team);
+    })
+}
+
 
 //delete a Team
 const deleteTeam = async (req,res)=>{
@@ -92,7 +103,9 @@ const deleteTeam = async (req,res)=>{
 }
 module.exports = {
     getTeams,
+    getTeam,
     createTeam,
     changeTeamMembers,
-    getTeamMembers
+    getTeamMembers,
+    deleteTeam
 }
