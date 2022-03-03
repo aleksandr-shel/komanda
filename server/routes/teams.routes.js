@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require('express')
 
-const router = express.Router();
+const router = express.Router()
 
 const teamsCtrl = require('../controllers/teams.controller')
 
@@ -15,4 +15,4 @@ router.post('/:teamId/changeMembers', teamsCtrl.changeTeamMembers)
 
 router.get('/:teamId/users', teamsCtrl.getTeamMembers)
 
-module.exports = router;
+module.exports = router

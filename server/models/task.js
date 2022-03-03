@@ -25,7 +25,7 @@ let Task = mongoose.Schema(
         },
         assignedUsers: {
             type: [mongoose.Schema.Types.ObjectId],
-            ref: "User",
+            ref: 'User',
             default: []
         }
     }, {

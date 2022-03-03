@@ -17,6 +17,7 @@ mongoDB.once('open',()=>{
 
 let usersRoute = require('../routes/users.routes')
 let teamsRoute = require('../routes/teams.routes')
+let tasksRoute = require('../routes/tasks.routes')
 
 let app = express()
 
@@ -28,8 +29,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 //routing
-app.use('/api/users', usersRoute);
-app.use('/api/teams', teamsRoute);
+app.use('/api/users', usersRoute)
+app.use('/api/teams', teamsRoute)
+app.use('/api/tasks', tasksRoute)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

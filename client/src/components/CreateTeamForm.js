@@ -67,7 +67,7 @@ const FormContainer = styled.div`
     }
 
     input{
-        margin: 14px 20px 14px 0px;
+        margin: 14px 20px 14px 0;
         padding: 8px;
     }
 

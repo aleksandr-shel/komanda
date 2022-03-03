@@ -1,5 +1,3 @@
-
-
 let Team = require('../models/team');
 
 let User = require('../models/user');

@@ -12,7 +12,7 @@ let User = mongoose.Schema(
         },
         teams: {
             type: [mongoose.Schema.Types.ObjectId],
-            ref: "Team",
+            ref: 'Team',
             default: []
         }
     }, {
