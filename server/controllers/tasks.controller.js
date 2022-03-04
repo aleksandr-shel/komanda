@@ -1,43 +1,75 @@
-let task = require('../models/task')
-let project = require('../models/project')
+const Task = require('../models/task')
+const Project = require('../models/project')
 
-let get_tasks = async (req, res) => {
+//return all tasks
+const getAllTasks = async (req,res)=>{ 
+    Task.find((err,tasks)=>{
+        if (err){
+            return res.status(400).send(err);
+        }
 
-	task.find((err, tasks) => {
-		if (err)
-		{
-			console.log(err)
-			res.send('error occurred' + err)
-		} else {
-			res.send(tasks)
-		}
-	})
+        res.status(200).send(tasks);
+    })
 }
-let create_task = async (req, res) => {
-	let new_task = new task({
-		taskName: req.body.taskName,
-		description: req.body.description,
-		status: req.body.status,
-		project: req.body.project,
-		deadline: req.body.deadline,
-		assignedUsers: [req.body.assignedUsers]
-	})
 
-	task.create(new_task, (err, result) => {
-		if (err)
-		{
-			res.send(err)
-		}
-		else
-		{
-			//adding task id to its identical project
-			project.updateOne({ _id: req.body.project }, {$push: {tasks: result._id}}).exec()
-			res.send(result)
-		}
-	})
+
+//get tasks related to the project
+const getProjectTasks = async (req,res)=>{
+    const {projectId} = req.params;
+
+    Task.find({project:projectId}, (err, tasks)=>{
+        if (err){
+            return res.status(400).send(err);
+        }
+        res.status(200).send(tasks);
+    })
 }
-let delete_task = async (req, res) => {
-	task.findByIdAndDelete(req.params.taskId, function(err, result){
+
+
+//creates a task, project id is in the request body.
+const createTask = async (req,res)=>{
+    const {taskName, description, status, project, deadline, assignedUsers} = req.body;
+
+    if (!project){
+        return res.status(400).send({message:'No project ID was sent'})
+    }
+
+    let newTask = new Task({
+        taskName,
+        description,
+        status,
+        project,
+        deadline,
+        assignedUsers
+    })
+
+    Task.create(
+        newTask,
+        (err, createdTask)=>{
+            if (err){
+                return res.status(400).send(err);
+            }
+
+            Project.findOneAndUpdate(
+                {_id:project},
+                {$push: {tasks: createdTask._id}},
+                (err)=>{
+                    if (err){
+                        return res.status(200).send('could not update project or project was not found')
+                    }
+                })
+            
+            res.status(200).send(createdTask);
+        }
+    )
+}
+
+const getTask = async (req,res)=>{
+
+}
+
+const deleteTask = async (req,res)=>{
+    Task.findByIdAndDelete(req.params.taskId, function(err, result){
 		if (err)
 		{
 			res.send(err)
@@ -45,14 +77,22 @@ let delete_task = async (req, res) => {
 		else
 		{
 			//removing task id from its identical project
-			project.updateOne({_id: result.project}, {$pop: {tasks: result._id}}).exec()
+			Project.updateOne({_id: result.project}, {$pull: {tasks: result._id}}).exec()
 			res.send(result)
 		}
 	})
 }
 
+const updateTask = async (req,res)=>{
+
+}
+
+
 module.exports = {
-	get_tasks,
-	create_task,
-	delete_task
+    getAllTasks,
+    getProjectTasks,
+    getTask,
+    createTask,
+    deleteTask,
+    updateTask
 }

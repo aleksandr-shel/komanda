@@ -3,7 +3,6 @@ const router = express.Router()
 
 
 const projectCtrl = require('../controllers/projects.controller');
-const { route } = require('./tasks.routes');
 
 router.get('/', projectCtrl.getAllProjects)
 

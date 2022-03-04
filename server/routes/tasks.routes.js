@@ -1,11 +1,20 @@
-let router = require('express').Router()
-let task_controller = require('../controllers/tasks.controller')
+const express = require('express');
+const router = express.Router();
 
-// get all tasks
-router.get('/', task_controller.get_tasks)
-//create task
-router.post('/create', task_controller.create_task)
-//delete task
-router.post('/:taskId/delete', task_controller.delete_task)
+const tasksCtrl = require('../controllers/tasks.controller')
 
-module.exports = router
+router.get('/',  tasksCtrl.getAllTasks)
+
+router.get('/:taskId', tasksCtrl.getTask);
+
+router.get('/project/:projectId', tasksCtrl.getProjectTasks);
+
+router.post('/create', tasksCtrl.createTask);
+
+router.put('/update/:taskId', tasksCtrl.updateTask);
+
+router.delete('/delete/:taskId', tasksCtrl.deleteTask);
+
+
+
+module.exports = router;
