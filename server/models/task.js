@@ -19,6 +19,10 @@ let Task = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             default: ''
         },
+        importance:{
+            type:String,
+            default: ''
+        },
         deadline:{
             type:Date,
             default:Date.now

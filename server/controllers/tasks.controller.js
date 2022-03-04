@@ -28,7 +28,7 @@ const getProjectTasks = async (req,res)=>{
 
 //creates a task, project id is in the request body.
 const createTask = async (req,res)=>{
-    const {taskName, description, status, project, deadline, assignedUsers} = req.body;
+    const {taskName, description, status, project, deadline, assignedUsers, importance} = req.body;
 
     if (!project){
         return res.status(400).send({message:'No project ID was sent'})
@@ -40,7 +40,8 @@ const createTask = async (req,res)=>{
         status,
         project,
         deadline,
-        assignedUsers
+        assignedUsers,
+        importance
     })
 
     Task.create(
