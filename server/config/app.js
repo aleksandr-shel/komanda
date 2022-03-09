@@ -7,7 +7,10 @@ const cors = require('cors')
 let mongoose = require('mongoose')
 let DB = require('./db')
 
-mongoose.connect(DB.URI, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(DB.URI,{useNewUrlParser: true, useUnifiedTopology: true},err => {
+    if(err)
+        console.log(err)
+})
 
 let mongoDB = mongoose.connection
 mongoDB.on('error', console.error.bind(console, 'Connection Error:'))
@@ -32,15 +35,15 @@ app.use(cookieParser())
 //routing
 app.use('/api/users', usersRoute)
 app.use('/api/teams', teamsRoute)
-app.use('/api/projects', projectsRoute);
-app.use('/api/tasks', tasksRoute);
+app.use('/api/projects', projectsRoute)
+app.use('/api/tasks', tasksRoute)
 
-// catch 404 and forward to error handler
+//catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    next(createError(404));
-});
-  
-// error handler
+    next(createError(404))
+})
+
+//error handler
 app.use(function(err, req, res) {
     // set locals, only providing error in development
     res.locals.message = err.message;
