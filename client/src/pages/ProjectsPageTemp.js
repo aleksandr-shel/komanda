@@ -57,7 +57,7 @@ export default function TeamsPageTemporary() {
                     <h2 className="username">{user.name.toUpperCase()}</h2>
                     <div className="buttonList">
                         <button className="elseButton">Profile</button>
-                        <button className="createButton">Projects </button>
+                        <button className="createButton">Teams </button>
                         <button className="elseButton">Sign Out</button>
                     </div>
                 </div>
