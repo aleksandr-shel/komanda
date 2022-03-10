@@ -1,6 +1,6 @@
 import Registration from './RegistrationPage';
-import TeamsPage from './TeamsPage';
-import ProjectsPage from './ProjectsPage';
+import TeamsPage from './TeamsPageTemporary';
+import ProjectsPage from './ProjectsPageTemp';
 import Home from './HomePage';
 import TasksPage from './TasksPage';
 
