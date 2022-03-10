@@ -7,20 +7,40 @@ import axios from 'axios';
 //import crown from '../assets/images/crown.svg'
 import { useAuth0 } from "@auth0/auth0-react";
 import ChangeTeamMembersForm from '../components/ChangeTeamMembersForm';
-import { AiOutlineCrown } from "react-icons/ai"
+import { AiOutlineCrown } from "react-icons/ai";
+import { useParams } from "react-router-dom";
+import {Breadcrumb} from 'react-bootstrap';
 
 export default function TasksPage() {
 
     const { user } = useAuth0();
+    const {projectId, teamId} = useParams();
 
     let { isAuthenticated } = useAuth0();
-
+    const [tasks, setTasks] = useState([]);
+    
     const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
+
+    useEffect(()=>{
+        async function getProjectTasks() {
+            if (projectId){
+                const result = await axios.get(`/api/tasks/project/${projectId}`);
+                setTasks(result.data);
+            }
+        }
+        getProjectTasks();
+    },[])
 
     if (isAuthenticated) {
         return (
             <div>
                 <div id='wrapper'>
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item href="/teams-page">Teams Page</Breadcrumb.Item>
+                        <Breadcrumb.Item href={`/${teamId}/projects-page`}>Teams Page</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Tasks Page</Breadcrumb.Item>
+                    </Breadcrumb>
                     <div className="teams">
                         <h1>//Project Name\\ Tasks:</h1>
                         <button className="addTaskButton">+ Add Task</button>
@@ -37,12 +57,18 @@ export default function TasksPage() {
                             </table>
                             <table>
                                 <div className="tasksListHeader"> 
-                                    <tr > 
-                                        <td><h5 style={{paddingRight: 40}}>Create a User model in the DB (reference in...)</h5></td>
-                                        <td><h5 style={{paddingRight: 80}}>03/04/22</h5></td>
-                                        <td><h5 style={{paddingRight: 19, paddingLeft: 19, backgroundColor: "#FFCD1D"}}>In Progress</h5></td>
-                                        <td><h5 style={{paddingRight: 31, paddingLeft: 21}}>See List</h5></td>
-                                    </tr>
+                                    {
+                                        tasks.map((task,index)=>{
+                                            return (
+                                                <tr > 
+                                                    <td><h5 style={{paddingRight: 40}}>{task.description}</h5></td>
+                                                    <td><h5 style={{paddingRight: 80}}>{task.deadline}</h5></td>
+                                                    <td><h5 style={{paddingRight: 19, paddingLeft: 19, backgroundColor: "#FFCD1D"}}>{task.status}</h5></td>
+                                                    <td><h5 style={{paddingRight: 31, paddingLeft: 21}}>{task.assignedUsers.map(user=>(user))}</h5></td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </table>
                         </div>

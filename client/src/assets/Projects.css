@@ -51,6 +51,11 @@ h5{
     padding: 20px;
 }
 
+.project:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
+
 .teamsTitle {
     width: 720px;
 }

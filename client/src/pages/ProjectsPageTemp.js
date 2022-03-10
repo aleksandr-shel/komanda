@@ -5,51 +5,70 @@ import { useEffect } from "react";
 import axios from 'axios';
 //import crown from '../assets/images/crown.svg'
 import { useAuth0 } from "@auth0/auth0-react";
+import { useParams } from "react-router-dom";
+import {Breadcrumb} from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
-export default function TeamsPageTemporary() {
+export default function TeamsPage() {
 
     const { user } = useAuth0();
+    const {teamId} = useParams();
 
     let { isAuthenticated } = useAuth0();
 
     const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
 
     const [showCreateTeamForm, setShowCreateTeamForm] = useState(false);
-    const [teamsList, setTeamsList] = useState([]);
+    const [projectsList, setProjectsList] = useState([]);
+    const [team, setTeam] = useState({});
 
-    const [showAddMembersForm, setShowAddMembersForm] = useState(false);
-
-    let [teamId, setTeamId] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        async function getUserTeams() {
-            if (userId) {
-                const result = await axios.get(`/api/users/${userId}/teams`)
-                setTeamsList(result.data);
+        async function getTeamProjects() {
+            if (teamId) {
+                const result = await axios.get(`/api/projects/${teamId}`)
+                setProjectsList(result.data);
+                axios.get(`/api/teams/${teamId}`).then(result=>{
+                    setTeam(result.data);
+                })
             }
         }
-        getUserTeams();
-    }, [userId, showCreateTeamForm])
+        getTeamProjects();
+    }, [])
+
+    function selectProject(projectId){
+        navigate(`/${teamId}/${projectId}/tasks-page`)
+    }
 
     if (isAuthenticated) {
         return (
-        <div>
+        <>
             <div id='wrapper'>
+                <Breadcrumb>
+                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                    <Breadcrumb.Item href="/teams-page">Teams Page</Breadcrumb.Item>
+                    <Breadcrumb.Item active>Projects Page</Breadcrumb.Item>
+                </Breadcrumb>
                 <div className="projects">
-                <h1>/Team Name\ Projects</h1>
-                <h5>Here is a list of projects created by /Team Name\...</h5>
-                <div className="listofproject">
-                <div className="addProject">
-                    <h1 className="plusSign">+</h1>
-                    <h2 className="addText"> Add New Project</h2>
-                </div>
-                <div className="project">
-                    <h2 className="projectName">Project Name</h2>
-                    <br />
-                    <p>/Team Name\</p>
-                    <br /><br /><br />
+                    <h1>/{team.teamName}\ Projects</h1>
+                    <h5>Here is a list of projects created by /Team Name\...</h5>
+                    <div className="listofproject">
+                        <div className="addProject">
+                            <h1 className="plusSign">+</h1>
+                            <h2 className="addText"> Add New Project</h2>
                         </div>
-                </div>
+                        {
+                            projectsList.map((project, index)=>(
+                                <div key={index} onClick={()=>{selectProject(project._id)}} className="project">
+                                    <h2 className="projectName">{project.projectName}</h2>
+                                    <br />
+                                    <p>Number of Tasks: {project.tasks.length}</p>
+                                    <br /><br /><br />
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
                 <div className="sideBar">
                     <img className="userpic" src={user.picture} alt={user.name} />
@@ -61,14 +80,14 @@ export default function TeamsPageTemporary() {
                         <button className="elseButton">Sign Out</button>
                     </div>
                 </div>
-                </div>
             </div>
+        </>
         )
     } else {
         return (
-            <div>
+            <>
                 <p>Please log in</p>
-            </div>
+            </>
         )
     }
 }

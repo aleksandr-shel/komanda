@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import CreateTeamForm from './../components/CreateTeamForm';
+import CreateTeamForm from '../components/CreateTeamForm';
 import '../assets/Teams.css'
 import { useEffect } from "react";
 import axios from 'axios';
@@ -8,8 +8,10 @@ import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 import ChangeTeamMembersForm from '../components/ChangeTeamMembersForm';
 import { AiOutlineCrown } from "react-icons/ai"
+import { useNavigate } from "react-router-dom";
+import {Breadcrumb} from 'react-bootstrap';
 
-export default function TeamsPageTemporary() {
+export default function TeamsPage() {
 
     const { user } = useAuth0();
 
@@ -17,12 +19,15 @@ export default function TeamsPageTemporary() {
 
     const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
 
+    const navigate = useNavigate();
     const [showCreateTeamForm, setShowCreateTeamForm] = useState(false);
     const [teamsList, setTeamsList] = useState([]);
 
     const [showChangeMembersForm, setShowChangeMembersForm] = useState(false);
 
     let [teamId, setTeamId] = useState();
+
+    
 
     useEffect(() => {
         async function getUserTeams() {
@@ -34,10 +39,19 @@ export default function TeamsPageTemporary() {
         getUserTeams();
     }, [userId, showCreateTeamForm])
 
+
+    function selectTeam(teamId){
+        navigate(`/${teamId}/projects-page`)
+    }
+
     if (isAuthenticated) {
         return (
             <div>
                 <div id='wrapper'>
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Teams Page</Breadcrumb.Item>
+                    </Breadcrumb>
                     <div className="teams">
                         <h1>Your Current Teams:</h1>
                         <h5>Here is a list of teams that you are a part of...</h5>
@@ -48,7 +62,7 @@ export default function TeamsPageTemporary() {
                             </div>
                             {teamsList.map((team, index) => {
                                 return (
-                                    <div className="team" key={index}>
+                                    <div onClick={()=>{selectTeam(team._id)}} className="team" key={index}>
                                         <h2 className="teamName">{team.teamName}</h2>
                                         <br />
                                         {userId === team.teamOwner ?
@@ -56,7 +70,8 @@ export default function TeamsPageTemporary() {
                                             (<p>Owner: {team.teamOwner}</p>)}
                                         <p>Number of Users: {team.users.length}</p>
                                         <br />
-                                        <button className="teamMembersButton" onClick={() => {
+                                        <button className="teamMembersButton" onClick={(e) => {
+                                            e.stopPropagation();
                                             setShowChangeMembersForm(!showChangeMembersForm);
                                             setTeamId(team._id);
                                         }}>

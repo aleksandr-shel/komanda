@@ -4,14 +4,17 @@ import { useEffect } from 'react';
 import '../assets/Home.css'
 import logo from '../assets/images/logo.png'
 import homeProfile from '../assets/images/homeProfilePic.png'
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const { isAuthenticated, loginWithRedirect, logout, user} =
     useAuth0();
   const isUser = isAuthenticated && user;
 
+  const navigate = useNavigate();
+
   useEffect(()=>{
-    console.log(user);
+    //console.log(user);
   }, [user])
 
   return (
@@ -31,7 +34,7 @@ const Home = () => {
         <img src={logo} className='mainLogo' alt="logo" />
         <p>Designed to improve your teamwork experience, komanda offers a wide range of possibilities when it comes to project management.</p>
         <p>All within a couple of clicks.</p>
-        <button onClick={loginWithRedirect} className='homeButton'>Try Komanda</button>
+        <button onClick={()=> { if (isUser) {navigate('/teams-page') } else { loginWithRedirect()}}} className='homeButton'>Try Komanda</button>
       </div>
       <div className = 'sideProfile'>
         <img src={homeProfile} className='homeProfilePic' alt="You Profile Picture" />
