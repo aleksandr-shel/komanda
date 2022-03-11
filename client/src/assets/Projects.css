@@ -73,6 +73,7 @@ h5{
 }
 
 .addProject {
+    cursor: pointer;
     float: left;
     width: 450px;
     height: 250px;

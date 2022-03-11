@@ -63,12 +63,13 @@ const getAllProjects = async(req,res)=>{
     })
 }
 
-
-//delete a project and return an updated team
-//!!!!!!!!!!!!!!should also delete all tasks related to this team later
+//seems like working (maybe not always)
+//deletes project and project reference in related team
+//deletes all tasks related to this project
 const deleteProject = async(req,res)=>{
 
     const {projectId} = req.params;
+
 
     Project.findOneAndRemove({_id:projectId}, (err, project)=>{
         if (err){
@@ -79,14 +80,20 @@ const deleteProject = async(req,res)=>{
             {_id:project.team},
             {$pull:{projects: projectId}},
             {new:true},
-            (err, team)=>{
+            (err)=>{
                 if (err){
-                    res.status(200).send({err,message:'team was not updated'});
+                    res.status(400).send({err,message:'team was not updated'});
                 }
-                res.status(200).send(team);
             }
         )
 
+        Task.deleteMany({project: projectId}, (err)=>{
+            if (err){
+                res.status(400).send({err, message:'could delete tasks related to a project'})
+            }
+        })
+
+        res.status(200).send({success:true});
     })
 }
 

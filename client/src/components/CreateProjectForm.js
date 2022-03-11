@@ -1,11 +1,36 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
+import axios from "axios";
 
-export default function CreateProjectForm({toShow, setToShow}){
+
+export default function CreateProjectForm({toShow, setToShow, teamId, setProjectsList}){
+
+    const [projectName, setProjectName] = useState('');
+
+
+    async function handleCreateProjectButton(){
+        const result = await axios.post('/api/projects/create',{
+            projectName,
+            team: teamId
+        })
+        setProjectsList(projects => [...projects, result.data])
+        setToShow(false);
+    }
+
     return (
-        <>
-            Create Project Form
-        </>
+        <FormContainer style={{ display: toShow ? 'flex' : 'none' }} onClick={()=>setToShow(false)}>
+            <div className="form-container" onClick={e=>e.stopPropagation()}>
+                <h1>Create a Project</h1>
+                
+                <input
+                    value={projectName}
+                    onChange={(e) => setProjectName(e.target.value)}
+                    type="text"
+                    placeholder="Project Name" />
+                <button onClick={handleCreateProjectButton}>Create Team</button>
+            </div>
+        </FormContainer>
     )
 }
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import CreateTeamForm from './../components/CreateTeamForm';
 import '../assets/Tasks.css'
 import { useEffect } from "react";
 import axios from 'axios';
@@ -10,6 +9,7 @@ import ChangeTeamMembersForm from '../components/ChangeTeamMembersForm';
 import { AiOutlineCrown } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import {Breadcrumb} from 'react-bootstrap';
+import { CreateTaskForm } from "../components/CreateTaskForm";
 
 export default function TasksPage() {
 
@@ -18,8 +18,7 @@ export default function TasksPage() {
 
     let { isAuthenticated } = useAuth0();
     const [tasks, setTasks] = useState([]);
-    
-    const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
+    const [showCreateTaskForm, setShowCreateTaskForm] = useState(false);
 
     useEffect(()=>{
         async function getProjectTasks() {
@@ -38,25 +37,23 @@ export default function TasksPage() {
                     <Breadcrumb>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/teams-page">Teams Page</Breadcrumb.Item>
-                        <Breadcrumb.Item href={`/${teamId}/projects-page`}>Teams Page</Breadcrumb.Item>
+                        <Breadcrumb.Item href={`/${teamId}/projects-page`}>Projects Page</Breadcrumb.Item>
                         <Breadcrumb.Item active>Tasks Page</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="teams">
                         <h1>//Project Name\\ Tasks:</h1>
-                        <button className="addTaskButton">+ Add Task</button>
+                        <button className="addTaskButton" onClick={()=>setShowCreateTaskForm(true)}>+ Add Task</button>
                         <div className="listOfTasks">
                             <table>
-                                <div className="tasksListHeader"> 
+                                <thead className="tasksListHeader"> 
                                     <tr > 
                                         <td><h5 style={{paddingRight: 380}}>Description</h5></td>
                                         <td><h5 style={{paddingRight: 80}}>Deadline</h5></td>
                                         <td><h5 style={{paddingRight: 80}}>Status</h5></td>
                                         <td><h5 style={{paddingRight: 32}}>Executors</h5></td>
                                     </tr>
-                                </div>
-                            </table>
-                            <table>
-                                <div className="tasksListHeader"> 
+                                </thead>
+                                <tbody className="tasksListHeader"> 
                                     {
                                         tasks.map((task,index)=>{
                                             return (
@@ -69,7 +66,7 @@ export default function TasksPage() {
                                             )
                                         })
                                     }
-                                </div>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -84,6 +81,7 @@ export default function TasksPage() {
                         </div>
                     </div>
                 </div>
+                <CreateTaskForm toShow={showCreateTaskForm} setToShow={setShowCreateTaskForm} projectId={projectId} setTasksList={setTasks}/>
             </div>
         )
     } else {

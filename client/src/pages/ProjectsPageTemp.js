@@ -8,6 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
 import {Breadcrumb} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
+import { CreateProjectForm } from "../components";
 
 export default function TeamsPage() {
 
@@ -18,7 +19,7 @@ export default function TeamsPage() {
 
     const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
 
-    const [showCreateTeamForm, setShowCreateTeamForm] = useState(false);
+    const [showCreateProjectForm, setShowCreateProjectForm] = useState(false);
     const [projectsList, setProjectsList] = useState([]);
     const [team, setTeam] = useState({});
 
@@ -54,7 +55,7 @@ export default function TeamsPage() {
                     <h1>/{team.teamName}\ Projects</h1>
                     <h5>Here is a list of projects created by /Team Name\...</h5>
                     <div className="listofproject">
-                        <div className="addProject">
+                        <div className="addProject" onClick={()=>setShowCreateProjectForm(true)}>
                             <h1 className="plusSign">+</h1>
                             <h2 className="addText"> Add New Project</h2>
                         </div>
@@ -81,6 +82,7 @@ export default function TeamsPage() {
                     </div>
                 </div>
             </div>
+            <CreateProjectForm toShow={showCreateProjectForm} setToShow={setShowCreateProjectForm} teamId={teamId} setProjectsList={setProjectsList}/>
         </>
         )
     } else {

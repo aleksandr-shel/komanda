@@ -1,4 +1,5 @@
 import Registration from './Registration';
 import Home from './Home';
 import CreateTeamForm from './CreateTeamForm';
-export { Registration, CreateTeamForm, Home };
+import CreateProjectForm from './CreateProjectForm';
+export { Registration, CreateTeamForm, Home, CreateProjectForm};
