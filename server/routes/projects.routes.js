@@ -12,4 +12,6 @@ router.post('/create', projectCtrl.createProject)
 
 router.delete('/delete/:projectId', projectCtrl.deleteProject)
 
+router.get('/project/:projectId', projectCtrl.getProject)
+
 module.exports = router

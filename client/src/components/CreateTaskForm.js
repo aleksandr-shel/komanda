@@ -8,7 +8,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('');
-    const [importance, setImportance] = useState('');
+    const [importance, setImportance] = useState('Medium');
     const [deadline, setDeadline] = useState('');
 
     //later will do assigned users
@@ -18,23 +18,31 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
         const result = await axios.post('/api/tasks/create',{
             taskName,
             description,
-            status: "Pending",
+            status: "Started",
             project:projectId,
             importance,
             deadline
         })
         setTasksList(tasks  => [...tasks, result.data])
+        clearInputs();
         setToShow(false);
+    }
+
+    function clearInputs(){
+        setTaskName('');
+        setDeadline('');
+        setDescription('');
+        setImportance('');
     }
 
 
     return (
-        <FormContainer style={{ display: toShow ? 'flex' : 'none' }} onClick={()=>setToShow(false)}>
+        <FormContainer style={{ display: toShow ? 'flex' : 'none' }} onClick={()=>{clearInputs(); setToShow(false)}}>
             <div className="form-container" onClick={e=>e.stopPropagation()}>
                 <h1>Add task</h1>
                 <div>
                     <label>
-                        Task Name:
+                        Task:
                     </label>
                     <input
                         value={taskName}
@@ -65,7 +73,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
                     <label>
                         Deadline
                     </label>
-                    <input type="datetime-local" value={deadline} onChange={e=>setDeadline(e.target.value)}/>
+                    <input type="date" value={deadline} onChange={e=>setDeadline(e.target.value)}/>
                 </div>
                 <button onClick={handleCreateTaskButton}>Create Team</button>
             </div>

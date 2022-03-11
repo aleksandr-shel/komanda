@@ -97,9 +97,23 @@ const deleteProject = async(req,res)=>{
     })
 }
 
+
+const getProject = async(req,res)=>{
+    const {projectId}=req.params;
+
+    Project.findById({_id:projectId}, (err,project)=>{
+        if (err){
+            res.status(400).send(err);
+        }
+
+        res.status(200).send(project);
+    })
+}
+
 module.exports = {
     createProject,
     getTeamProjects,
     getAllProjects,
-    deleteProject
+    deleteProject,
+    getProject
 }

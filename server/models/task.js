@@ -21,7 +21,8 @@ let Task = mongoose.Schema(
         },
         importance:{
             type:String,
-            default: ''
+            enum: ['High', 'Medium', 'Low'],
+            default: 'Medium'
         },
         deadline:{
             type:Date,

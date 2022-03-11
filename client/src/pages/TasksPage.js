@@ -5,11 +5,10 @@ import { useEffect } from "react";
 import axios from 'axios';
 //import crown from '../assets/images/crown.svg'
 import { useAuth0 } from "@auth0/auth0-react";
-import ChangeTeamMembersForm from '../components/ChangeTeamMembersForm';
-import { AiOutlineCrown } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import {Breadcrumb} from 'react-bootstrap';
 import { CreateTaskForm } from "../components/CreateTaskForm";
+import { Table } from "react-bootstrap";
 
 export default function TasksPage() {
 
@@ -19,6 +18,7 @@ export default function TasksPage() {
     let { isAuthenticated } = useAuth0();
     const [tasks, setTasks] = useState([]);
     const [showCreateTaskForm, setShowCreateTaskForm] = useState(false);
+    const [project, setProject] = useState({});
 
     useEffect(()=>{
         async function getProjectTasks() {
@@ -27,8 +27,39 @@ export default function TasksPage() {
                 setTasks(result.data);
             }
         }
+        async function getProject(){
+            if (projectId){
+                const result = await axios.get(`/api/projects/project/${projectId}`);
+                setProject(result.data);
+            }
+        }
         getProjectTasks();
+        getProject();
     },[])
+
+    function colorImportance(importance){
+        switch(importance){
+            case "High":
+                return <span style={{backgroundColor:'red'}}>{importance}</span>
+            case "Medium":
+                return <span style={{backgroundColor:'orange'}}>{importance}</span>
+            case "Low":
+                return <span style={{backgroundColor:'yellow'}}>{importance}</span>
+            default:
+                return <span>{importance}</span>
+        }
+    }
+
+    function colorStatus(status){
+        switch(status){
+            case "Completed":
+                return <span style={{backgroundColor:'green'}}>{status}</span>
+            case "In progress":
+                return <span style={{backgroundColor:'orange'}}>{status}</span>
+            default:
+                return <span>{status}</span>
+        }
+    }
 
     if (isAuthenticated) {
         return (
@@ -41,33 +72,53 @@ export default function TasksPage() {
                         <Breadcrumb.Item active>Tasks Page</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="teams">
-                        <h1>//Project Name\\ Tasks:</h1>
+                        <h1>//{project?.projectName}\\ Tasks:</h1>
                         <button className="addTaskButton" onClick={()=>setShowCreateTaskForm(true)}>+ Add Task</button>
                         <div className="listOfTasks">
-                            <table>
-                                <thead className="tasksListHeader"> 
-                                    <tr > 
-                                        <td><h5 style={{paddingRight: 380}}>Description</h5></td>
-                                        <td><h5 style={{paddingRight: 80}}>Deadline</h5></td>
-                                        <td><h5 style={{paddingRight: 80}}>Status</h5></td>
-                                        <td><h5 style={{paddingRight: 32}}>Executors</h5></td>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Task
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                        <th>
+                                            Deadline
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Importance
+                                        </th>
+                                        <th>
+                                            Executors
+                                        </th>
+                                        <th>
+                                            buttons...
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody className="tasksListHeader"> 
+                                <tbody>
                                     {
                                         tasks.map((task,index)=>{
                                             return (
-                                                <tr > 
-                                                    <td><h5 style={{paddingRight: 40}}>{task.description}</h5></td>
-                                                    <td><h5 style={{paddingRight: 80}}>{task.deadline}</h5></td>
-                                                    <td><h5 style={{paddingRight: 19, paddingLeft: 19, backgroundColor: "#FFCD1D"}}>{task.status}</h5></td>
-                                                    <td><h5 style={{paddingRight: 31, paddingLeft: 21}}>{task.assignedUsers.map(user=>(user))}</h5></td>
+                                                <tr key={index} > 
+                                                    <td>{task.taskName}</td>
+                                                    <td>{task.description}</td>
+                                                    <td>{new Date(task.deadline).toDateString()}</td>
+                                                    <td>{colorStatus(task.status)}</td>
+                                                    <td>{colorImportance(task.importance)}</td>
+                                                    <td>{task.assignedUsers.map(user=>(user))}</td>
+                                                    <td><button>Update</button><button>Delete</button></td>
                                                 </tr>
                                             )
                                         })
                                     }
                                 </tbody>
-                            </table>
+                            </Table>
                         </div>
                     </div>
                     <div className="sideBar">
