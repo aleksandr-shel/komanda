@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
@@ -10,9 +11,32 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
     const [status, setStatus] = useState('');
     const [importance, setImportance] = useState('Medium');
     const [deadline, setDeadline] = useState('');
-
-    //later will do assigned users
     const [assignedUsers, setAssignedUsers] = useState([]);
+
+    const { teamId } = useParams();
+
+    let [teamMembers, setTeamMembers] = useState([]);
+    useEffect(() => {
+        if (teamId) {
+            axios.get(`/api/teams/${teamId}/users`)
+                .then(res => {
+                    const { usersArrayTemp } = res.data;
+
+                    setTeamMembers(usersArrayTemp);
+                })
+        }
+    }, [teamId])
+
+    const handleCheckboxChange = event => {
+        let updatedList = [...assignedUsers];
+        if (event.target.checked) {
+            updatedList = [...assignedUsers, event.target.value];
+        } else {
+            updatedList.splice(assignedUsers.indexOf(event.target.value), 1);
+        }
+
+        setAssignedUsers(updatedList);
+    };
 
     async function handleCreateTaskButton(){
         const result = await axios.post('/api/tasks/create',{
@@ -21,7 +45,8 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
             status: "Started",
             project:projectId,
             importance,
-            deadline
+            deadline,
+            assignedUsers
         })
         setTasksList(tasks  => [...tasks, result.data])
         clearInputs();
@@ -35,6 +60,23 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
         setImportance('');
     }
 
+    //USED FOR DEBUGGING
+    /*useEffect(() => {
+        console.log("assignedUsers: " + assignedUsers)
+    }, [assignedUsers])*/
+
+    function renderUsersList() {
+        return (
+            teamMembers.map((user, index) => {
+                return (
+                    <div key={index}>
+                        <input type="checkbox" id={user} value={user} onChange={handleCheckboxChange} />
+                        <label htmlFor={user}>{user}</label>
+                    </div >
+                )
+            })
+        )
+    }
 
     return (
         <FormContainer style={{ display: toShow ? 'flex' : 'none' }} onClick={()=>{clearInputs(); setToShow(false)}}>
@@ -75,8 +117,19 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
                     </label>
                     <input type="date" value={deadline} onChange={e=>setDeadline(e.target.value)}/>
                 </div>
+
+                <div className="team-members-list">
+                    <h3>Assign Members</h3>
+
+                    <div>
+                        {renderUsersList()}
+                    </div>
+                </div>
+
                 <button onClick={handleCreateTaskButton}>Create Team</button>
             </div>
+
+  
         </FormContainer>
     )
 }
@@ -106,12 +159,16 @@ const FormContainer = styled.div`
         padding: 32px;
     }
 
-    .form-container div{
+    .form-container div:not(.team-members-list div) {
         padding:  8px;
         margin: 8px;
         display: flex;
         justify-content: space-between;
         align-content: center;
+    }
+
+    .team-members-list h3 {
+        margin-right: 80px;
     }
 
     label {
