@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import {Breadcrumb} from 'react-bootstrap';
 import { CreateTaskForm } from "../components/CreateTaskForm";
 import { Table } from "react-bootstrap";
+import { EditTaskForm } from "../components/EditTaskForm";
 
 export default function TasksPage() {
 
@@ -18,7 +19,10 @@ export default function TasksPage() {
     let { isAuthenticated } = useAuth0();
     const [tasks, setTasks] = useState([]);
     const [showCreateTaskForm, setShowCreateTaskForm] = useState(false);
+    const [showEditTaskForm, setShowEditTaskForm] = useState(false);
     const [project, setProject] = useState({});
+
+    const [taskToEdit, setTaskToEdit] = useState([]);
 
     useEffect(()=>{
         async function getProjectTasks() {
@@ -112,7 +116,14 @@ export default function TasksPage() {
                                                     <td>{colorStatus(task.status)}</td>
                                                     <td>{colorImportance(task.importance)}</td>
                                                     <td>{task.assignedUsers.map(user=>(user))}</td>
-                                                    <td><button>Update</button><button>Delete</button></td>
+                                                    <td><button onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setShowEditTaskForm(!showEditTaskForm);
+                                                        setTaskToEdit(task);
+                                                    }}>
+                                                        Edit
+                                                    </button>
+                                                    <button>Delete</button></td>
                                                 </tr>
                                             )
                                         })
@@ -133,6 +144,7 @@ export default function TasksPage() {
                     </div>
                 </div>
                 <CreateTaskForm toShow={showCreateTaskForm} setToShow={setShowCreateTaskForm} projectId={projectId} setTasksList={setTasks}/>
+                <EditTaskForm toShow={showEditTaskForm} setToShow={setShowEditTaskForm} task={taskToEdit} />
             </div>
         )
     } else {
