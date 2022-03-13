@@ -28,7 +28,7 @@ export default function CreateProjectForm({toShow, setToShow, teamId, setProject
                     onChange={(e) => setProjectName(e.target.value)}
                     type="text"
                     placeholder="Project Name" />
-                <button onClick={handleCreateProjectButton}>Create Team</button>
+                <button onClick={handleCreateProjectButton}>Create Project</button>
             </div>
         </FormContainer>
     )

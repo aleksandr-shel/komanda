@@ -7,9 +7,8 @@ import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
 import {Breadcrumb} from 'react-bootstrap';
-import { CreateTaskForm } from "../components/CreateTaskForm";
 import { Table } from "react-bootstrap";
-import { EditTaskForm } from "../components/EditTaskForm";
+import { CreateTaskForm, DeleteTaskForm, EditTaskForm } from "../components";
 
 export default function TasksPage() {
 
@@ -18,8 +17,11 @@ export default function TasksPage() {
 
     let { isAuthenticated } = useAuth0();
     const [tasks, setTasks] = useState([]);
+    const [taskIdToDelete, setTaskIdToDelete] = useState();
+    const [taskNameToDelete, setTaskNameToDelete] = useState('');
     const [showCreateTaskForm, setShowCreateTaskForm] = useState(false);
     const [showEditTaskForm, setShowEditTaskForm] = useState(false);
+    const [showDeleteTaskForm, setShowDeleteTaskForm] = useState(false);
     const [project, setProject] = useState({});
 
     const [taskToEdit, setTaskToEdit] = useState([]);
@@ -63,6 +65,13 @@ export default function TasksPage() {
             default:
                 return <span>{status}</span>
         }
+    }
+
+    function handleDeleteButton(e, taskId, taskName){
+        e.stopPropagation();
+        setTaskIdToDelete(taskId);
+        setTaskNameToDelete(taskName);
+        setShowDeleteTaskForm(true);
     }
 
     if (isAuthenticated) {
@@ -115,7 +124,11 @@ export default function TasksPage() {
                                                     <td>{new Date(task.deadline).toDateString()}</td>
                                                     <td>{colorStatus(task.status)}</td>
                                                     <td>{colorImportance(task.importance)}</td>
-                                                    <td>{task.assignedUsers.map(user=>(user))}</td>
+                                                    <td>
+                                                        <ul>
+                                                            {task.assignedUsers.map(user=>(<li>{user}</li>))}
+                                                        </ul>
+                                                    </td>
                                                     <td><button onClick={(e) => {
                                                         e.stopPropagation();
                                                         setShowEditTaskForm(!showEditTaskForm);
@@ -123,7 +136,11 @@ export default function TasksPage() {
                                                     }}>
                                                         Edit
                                                     </button>
-                                                    <button>Delete</button></td>
+                                                    <button onClick={(e)=>{
+                                                        handleDeleteButton(e, task._id, task.taskName);
+                                                    }}>
+                                                        Delete
+                                                    </button></td>
                                                 </tr>
                                             )
                                         })
@@ -144,7 +161,8 @@ export default function TasksPage() {
                     </div>
                 </div>
                 <CreateTaskForm toShow={showCreateTaskForm} setToShow={setShowCreateTaskForm} projectId={projectId} setTasksList={setTasks}/>
-                <EditTaskForm toShow={showEditTaskForm} setToShow={setShowEditTaskForm} task={taskToEdit} />
+                <EditTaskForm toShow={showEditTaskForm} setToShow={setShowEditTaskForm} task={taskToEdit} setTasks={setTasks} />
+                <DeleteTaskForm toShow={showDeleteTaskForm} setToShow={setShowDeleteTaskForm} taskId={taskIdToDelete} taskName={taskNameToDelete} setTasks={setTasks}/>
             </div>
         )
     } else {

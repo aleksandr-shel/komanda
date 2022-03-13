@@ -39,7 +39,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
     };
 
     async function handleCreateTaskButton(){
-        const result = await axios.post('/api/tasks/create',{
+        axios.post('/api/tasks/create',{
             taskName,
             description,
             status: "Started",
@@ -47,17 +47,20 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
             importance,
             deadline,
             assignedUsers
+        }).then(response=>{
+            setTasksList(tasks  => [...tasks, response.data])
+            clearInputs();
+            setToShow(false);
+        }).catch(err=>{
+            console.log(err);
         })
-        setTasksList(tasks  => [...tasks, result.data])
-        clearInputs();
-        setToShow(false);
     }
 
     function clearInputs(){
         setTaskName('');
         setDeadline('');
         setDescription('');
-        setImportance('');
+        setImportance('Medium');
     }
 
     //USED FOR DEBUGGING
@@ -126,7 +129,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
                     </div>
                 </div>
 
-                <button onClick={handleCreateTaskButton}>Create Team</button>
+                <button onClick={handleCreateTaskButton}>Create Task</button>
             </div>
 
   

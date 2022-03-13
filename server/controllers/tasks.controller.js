@@ -76,14 +76,14 @@ const getTask = async (req, res) => {};
 const deleteTask = async (req, res) => {
   Task.findByIdAndDelete(req.params.taskId, (err, result) => {
     if (err) {
-      res.send(err);
+      res.status(400).send(err);
     } else {
       //removing task id from its identical project
       Project.updateOne(
         { _id: result.project },
         { $pull: { tasks: result._id } }
       ).exec();
-      res.send(result);
+      res.status(200).send(result);
     }
   });
 };

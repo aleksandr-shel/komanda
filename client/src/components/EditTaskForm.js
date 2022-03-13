@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export function EditTaskForm({ toShow, setToShow, task }) {
+export function EditTaskForm({ toShow, setToShow, task, setTasks}) {
 
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
@@ -51,16 +51,23 @@ export function EditTaskForm({ toShow, setToShow, task }) {
     };
 
     async function handleEditTaskButton() {
-        await axios.put(`/api/tasks/update/${task._id}`, {
+        axios.put(`/api/tasks/update/${task._id}`, {
             taskName,
             description,
             status,
             importance,
             deadline,
             assignedUsers
+        }).then(response =>{
+            if (response.status === 200){
+                setTasks(tasks=>{
+                    return tasks.map((task)=>{
+                        return task._id === response.data._id ? response.data : task;
+                    })
+                })
+                setToShow(false);
+            }
         })
-        setToShow(false);
-        window.location.reload(); //reload the page
     }
 
     //USED FOR DEBUGGING
