@@ -38,6 +38,10 @@ app.use('/api/teams', teamsRoute)
 app.use('/api/projects', projectsRoute)
 app.use('/api/tasks', tasksRoute)
 
+app.use('/', (req, res) => {
+    res.send('the server is working')
+})
+
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404))
