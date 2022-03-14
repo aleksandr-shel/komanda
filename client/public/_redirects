@@ -1,0 +1,2 @@
+/api/* https://komanda-app.herokuapp.com/:splat 200
+/* /index.html 200
