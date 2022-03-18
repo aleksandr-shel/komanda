@@ -127,7 +127,7 @@ const updateTask = async (req, res) => {
 const handleRealTimeTasks = (socket)=>{
     // console.log('connected');
     socket.on('joinTasksPage', ({projectId})=>{
-      // console.log('joined' + projectId)
+      console.log('joined project with id: ' + projectId)
       socket.join(projectId);
     })
 

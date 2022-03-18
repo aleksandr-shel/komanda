@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="teams-page" element={<TeamsPage />} />
-        <Route path="/:teamId/projects-page" element={<ProjectsPage socket={socket} />} />
+        <Route path="/:teamId/projects-page" element={<ProjectsPage/>} />
         <Route path="/:teamId/:projectId/tasks-page" element={<TasksPage socket={socket} />} />
       </Routes>
     </Router>

@@ -17,6 +17,7 @@ export default function TasksPage({socket}) {
     const { user } = useAuth0();
     const {projectId, teamId} = useParams();
 
+
     let { isAuthenticated } = useAuth0();
     const [tasks, setTasks] = useState([]);
     const [taskIdToDelete, setTaskIdToDelete] = useState();
@@ -29,6 +30,9 @@ export default function TasksPage({socket}) {
     const [taskToEdit, setTaskToEdit] = useState([]);
 
     useEffect(()=>{
+        if (projectId !== null){
+            socket.emit('joinTasksPage', {projectId})
+        }
         async function getProjectTasks() {
             if (projectId){
                 const result = await axios.get(`/api/tasks/project/${projectId}`);
