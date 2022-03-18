@@ -2,7 +2,7 @@
   "name": "komanda",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://komanda-app.herokuapp.com/",
+  "proxy":"http://127.0.0.1:5000",
   "dependencies": {
     "@auth0/auth0-react": "^1.9.0",
     "@emotion/react": "^11.7.1",
@@ -20,6 +20,7 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
+    "socket.io-client": "^4.4.1",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4"
   },

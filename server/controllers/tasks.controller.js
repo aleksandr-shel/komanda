@@ -1,5 +1,6 @@
 const Task = require('../models/task');
 const Project = require('../models/project');
+const project = require('../models/project');
 
 //return all tasks
 const getAllTasks = async (req, res) => {
@@ -123,6 +124,28 @@ const updateTask = async (req, res) => {
   );
 };
 
+const handleRealTimeTasks = (socket)=>{
+    // console.log('connected');
+    socket.on('joinTasksPage', ({projectId})=>{
+      // console.log('joined' + projectId)
+      socket.join(projectId);
+    })
+
+
+    socket.on('addTask', (task)=>{
+      socket.broadcast.to(task?.project).emit("task-added", task)
+    })
+
+    socket.on('deleteTask', ({taskId, projectId})=>{
+      socket.broadcast.to(projectId).emit('task-deleted', {taskId})
+    })
+
+    socket.on('updateTask', (task)=>{
+      socket.broadcast.to(task?.project).emit('task-updated', task)
+    })
+}
+
+
 module.exports = {
   getAllTasks,
   getProjectTasks,
@@ -130,4 +153,5 @@ module.exports = {
   createTask,
   deleteTask,
   updateTask,
+  handleRealTimeTasks
 };

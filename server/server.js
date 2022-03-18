@@ -1,6 +1,8 @@
 let app = require('./config/app')
 let debug = require('debug')('api:server')
 let http = require('http')
+const socket = require('socket.io');
+const tasksCtrl = require('./controllers/tasks.controller');
 
 /**
  * Get port from environment and store in Express.
@@ -22,6 +24,13 @@ let server = http.createServer(app)
 server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)
+
+const io = socket(server);
+
+io.on('connection', (socket)=>{
+  tasksCtrl.handleRealTimeTasks(socket);
+})
+
 
 /**
  * Normalize a port into a number, string, or false.

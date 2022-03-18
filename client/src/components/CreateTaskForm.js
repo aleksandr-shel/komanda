@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
+export function CreateTaskForm({toShow, setToShow, projectId, setTasksList, socket}){
 
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
@@ -21,7 +21,6 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
             axios.get(`/api/teams/${teamId}/users`)
                 .then(res => {
                     const { usersArrayTemp } = res.data;
-
                     setTeamMembers(usersArrayTemp);
                 })
         }
@@ -49,6 +48,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList}){
             assignedUsers
         }).then(response=>{
             setTasksList(tasks  => [...tasks, response.data])
+            socket.emit('addTask', response.data)
             clearInputs();
             setToShow(false);
         }).catch(err=>{

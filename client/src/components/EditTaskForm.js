@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export function EditTaskForm({ toShow, setToShow, task, setTasks}) {
+export function EditTaskForm({ toShow, setToShow, task, setTasks, socket}) {
 
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
@@ -65,6 +65,7 @@ export function EditTaskForm({ toShow, setToShow, task, setTasks}) {
                         return task._id === response.data._id ? response.data : task;
                     })
                 })
+                socket.emit('updateTask', response.data);
                 setToShow(false);
             }
         })

@@ -10,7 +10,9 @@ import {Breadcrumb} from 'react-bootstrap';
 import { Table } from "react-bootstrap";
 import { CreateTaskForm, DeleteTaskForm, EditTaskForm } from "../components";
 
-export default function TasksPage() {
+
+
+export default function TasksPage({socket}) {
 
     const { user } = useAuth0();
     const {projectId, teamId} = useParams();
@@ -42,6 +44,23 @@ export default function TasksPage() {
         getProjectTasks();
         getProject();
     },[])
+
+    useEffect(()=>{
+        socket.on('task-added', (task)=>{
+            setTasks(tasks  => [...tasks, task])
+        })
+        socket.on('task-deleted', ({taskId})=>{
+            setTasks(tasks => tasks.filter((task)=>task._id !== taskId));
+        })
+
+        socket.on('task-updated', (taskEdited)=>{
+            setTasks(tasks=>{
+                return tasks.map((task)=>{
+                    return task._id === taskEdited._id ? taskEdited : task;
+                })
+            })
+        })
+    }, [socket])
 
     function colorImportance(importance){
         switch(importance){
@@ -160,9 +179,9 @@ export default function TasksPage() {
                         </div>
                     </div>
                 </div>
-                <CreateTaskForm toShow={showCreateTaskForm} setToShow={setShowCreateTaskForm} projectId={projectId} setTasksList={setTasks}/>
-                <EditTaskForm toShow={showEditTaskForm} setToShow={setShowEditTaskForm} task={taskToEdit} setTasks={setTasks} />
-                <DeleteTaskForm toShow={showDeleteTaskForm} setToShow={setShowDeleteTaskForm} taskId={taskIdToDelete} taskName={taskNameToDelete} setTasks={setTasks}/>
+                <CreateTaskForm toShow={showCreateTaskForm} socket={socket} setToShow={setShowCreateTaskForm} projectId={projectId} setTasksList={setTasks}/>
+                <EditTaskForm toShow={showEditTaskForm} socket={socket} setToShow={setShowEditTaskForm} task={taskToEdit} setTasks={setTasks} />
+                <DeleteTaskForm toShow={showDeleteTaskForm} socket={socket} setToShow={setShowDeleteTaskForm} taskId={taskIdToDelete} taskName={taskNameToDelete} setTasks={setTasks} projectId={projectId}/>
             </div>
         )
     } else {

@@ -10,7 +10,7 @@ import {Breadcrumb} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { CreateProjectForm } from "../components";
 
-export default function TeamsPage() {
+export default function ProjectsPage({socket}) {
 
     const { user } = useAuth0();
     const {teamId} = useParams();
@@ -39,6 +39,7 @@ export default function TeamsPage() {
     }, [])
 
     function selectProject(projectId){
+        socket.emit('joinTasksPage', {projectId})
         navigate(`/${teamId}/${projectId}/tasks-page`)
     }
 

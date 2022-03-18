@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import axios from 'axios';
 
-export function DeleteTaskForm({toShow, setToShow, taskId, taskName, setTasks}){
+export function DeleteTaskForm({toShow, setToShow, taskId, taskName, setTasks, projectId, socket}){
 
     function handleDelete(){
         axios.delete(`/api/tasks/delete/${taskId}`).then(response=>{
             if (response.status === 200){
                 setTasks(tasks => tasks.filter((task)=>task._id !== taskId));
+                socket.emit('deleteTask', {taskId, projectId})
                 setToShow(false);
             }
         })
