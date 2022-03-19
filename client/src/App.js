@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import io from "socket.io-client";
 
-const socket = io.connect('/');
+const socket = io.connect('https://komanda-app.herokuapp.com/');
 
 function App() {
   return (

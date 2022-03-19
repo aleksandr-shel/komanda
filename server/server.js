@@ -25,7 +25,7 @@ server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)
 
-const io = socket(server);
+const io = socket(server, { cors: { origin: "*" } });
 
 io.on('connection', (socket)=>{
   tasksCtrl.handleRealTimeTasks(socket);
