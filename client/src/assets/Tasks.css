@@ -3,22 +3,34 @@
     color: #333333;
 }
 
-#wrapper {
+#wrapperTasks {
     overflow: hidden;
 }
 
 .sideBarTasks {
+
     float: left;
     margin: 10%;
-    margin-top: 13%;
+    margin-bottom: 0%;
+    margin-top: 6%;
     max-width: 40%;
 }
-.userpic{
+.userpicTasks{
     margin-bottom: 15%;
     margin-left: 80px;
     width: 150px;
 }
 
+.tasks{
+    display: inline-block;
+    margin-bottom: 0%;
+    margin-top:6%;
+}
+
+.task:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
 
 .listOfTasks {
     max-width: 1500px;
@@ -33,10 +45,6 @@
     background-color: #e6e6e6;
 }
 
-.teamsTitle {
-    width: 720px;
-}
-
 .plusSign {
     margin-top: 30px;
     font-weight: lighter;
@@ -49,30 +57,12 @@
     font-size: 40px;
 }
 
-.addTeam {
-    float: left;
-    width: 450px;
-    height: 250px;
-    background-color: #e6e6e6;
-    border-color: #333333;
-    border-style: dashed;
-    border-width: thin;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 20px;
-}
 
-.addTeam:hover {
-    background-color: #33333352;
-    color: white;
-    transition: all .2s ease;
-}
-
-.buttonList {
+.buttonListTasks {
     width: 300px;
 }
 
-.username{
+.usernameTasks{
     margin: 0;
     max-width:300px;
     text-align: center;
@@ -82,40 +72,13 @@
     text-overflow: ellipsis;
 }
 
-.teamName{
-    margin-left: 5px;
-    margin-top: 5px;
-    font-size: 40px;
-    text-align: left;
-    margin-bottom: 10px;
-}
+
 
 p {
     font-size: 16px;
     margin-bottom: 0;
 }
 
-.teamMembersButton {
-    background-color: #e6e6e6;
-    border-radius: 50px;
-    border-color: #333333;
-    font-weight: bold;
-    padding: 5px;
-    font-size: 15px;
-    width: 150px;
-}
-
-.teamMembersButton:hover {
-    background-color: #333333;
-    color: #e6e6e6;
-    transition: all .2s ease;
-}
-
-.teamMembersButton:active {
-    background-color:  #e6e6e6;
-    color:#333333;
-    transition: all .2s ease;
-}
 
 .addTaskButton {
     background-color: white;
@@ -127,8 +90,34 @@ p {
     width: 250px;
     margin-top: 3%;
 }
+.deleteTask {
+    background-color: white;
+    border-radius: 10px;
+    border-color: #333333;
+    font-weight: bolder;
+    padding: 2px;
+    font-size: 15px;
+    width: 100px;
+}
 
 .addTaskButton:hover {
+    background-color: #333333;
+    color: white;
+    transition: all .2s ease;
+ }
+
+.taskTitle {
+    max-width:50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.taskImportance {
+   border-style: dashed;
+}
+
+ .deleteTask:hover {
     background-color: #333333;
     color: white;
     transition: all .2s ease;
@@ -138,8 +127,12 @@ p {
     background-color: white;
     color: #333333;
  }
+ .deleteTask:active {
+    background-color: white;
+    color: #333333;
+ }
 
-.createButton {
+.createButtonTasks {
     background-color: white;
     border-radius: 50px;
     border-color: #333333;
@@ -150,18 +143,18 @@ p {
     margin-top: 30px;
 }
 
-.createButton:hover {
+.createButtonTasks:hover {
     background-color: #333333;
     color: white;
     transition: all .2s ease;
  }
 
- .createButton:active {
+ .createButtonTasks:active {
     background-color: white;
     color: #333333;
  }
 
- .elseButton {
+ .elseButtonTasks {
     background-color: white;
     border-radius: 50px;
     border-color: #e6e6e6;
@@ -172,13 +165,13 @@ p {
     margin-top: 30px;
 }
 
-.elseButton:hover {
+.elseButtonTasks:hover {
     background-color: #e6e6e6;
     color: white;
     transition: all .2s ease;
  }
 
- .elseButton:active {
+ .elseButtonTasks:active {
     background-color: white;
     color: #e6e6e6;
  }

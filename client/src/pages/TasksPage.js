@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import {Breadcrumb} from 'react-bootstrap';
 import { Table } from "react-bootstrap";
 import { CreateTaskForm, DeleteTaskForm, EditTaskForm } from "../components";
-
+import { useNavigate } from "react-router-dom";
 
 
 export default function TasksPage({socket}) {
@@ -18,7 +18,7 @@ export default function TasksPage({socket}) {
     const {projectId, teamId} = useParams();
 
 
-    let { isAuthenticated } = useAuth0();
+    let { isAuthenticated, logout } = useAuth0();
     const [tasks, setTasks] = useState([]);
     const [taskIdToDelete, setTaskIdToDelete] = useState();
     const [taskNameToDelete, setTaskNameToDelete] = useState('');
@@ -26,7 +26,7 @@ export default function TasksPage({socket}) {
     const [showEditTaskForm, setShowEditTaskForm] = useState(false);
     const [showDeleteTaskForm, setShowDeleteTaskForm] = useState(false);
     const [project, setProject] = useState({});
-
+    const navigate = useNavigate();
     const [taskToEdit, setTaskToEdit] = useState([]);
 
     useEffect(()=>{
@@ -48,7 +48,7 @@ export default function TasksPage({socket}) {
         getProjectTasks();
         getProject();
     },[])
-
+ 
     useEffect(()=>{
         socket.on('task-added', (task)=>{
             setTasks(tasks  => [...tasks, task])
@@ -69,11 +69,11 @@ export default function TasksPage({socket}) {
     function colorImportance(importance){
         switch(importance){
             case "High":
-                return <span style={{backgroundColor:'red'}}>{importance}</span>
+                return <span style={{backgroundColor:"#E17070", borderRadius:'10%', paddingTop: '2%',paddingRight:'30%', paddingLeft: '30%'}}>{importance}</span>
             case "Medium":
-                return <span style={{backgroundColor:'orange'}}>{importance}</span>
+                return <span style={{backgroundColor:"#FFCD1D", borderRadius:'10%', paddingTop: '2%',paddingRight:'30%', paddingLeft: '30%'}}>{importance}</span>
             case "Low":
-                return <span style={{backgroundColor:'yellow'}}>{importance}</span>
+                return <span style={{backgroundColor:"#A8DC89", borderRadius:'10%', paddingTop: '2%',paddingRight:'30%', paddingLeft: '30%'}}>{importance}</span>
             default:
                 return <span>{importance}</span>
         }
@@ -100,66 +100,51 @@ export default function TasksPage({socket}) {
     if (isAuthenticated) {
         return (
             <div>
-                <div id='wrapper'>
+                <div id='wrapperTasks'>
                     <Breadcrumb>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/teams-page">Teams Page</Breadcrumb.Item>
                         <Breadcrumb.Item href={`/${teamId}/projects-page`}>Projects Page</Breadcrumb.Item>
                         <Breadcrumb.Item active>Tasks Page</Breadcrumb.Item>
                     </Breadcrumb>
-                    <div className="teams">
-                        <h1>//{project?.projectName}\\ Tasks:</h1>
+                    <div className="tasks">
+                        <h1>{project?.projectName} Tasks:</h1>
                         <button className="addTaskButton" onClick={()=>setShowCreateTaskForm(true)}>+ Add Task</button>
                         <div className="listOfTasks">
                             <Table>
                                 <thead>
                                     <tr>
-                                        <th>
-                                            Task
-                                        </th>
-                                        <th>
-                                            Description
-                                        </th>
-                                        <th>
-                                            Deadline
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <th>
-                                            Importance
-                                        </th>
-                                        <th>
-                                            Executors
-                                        </th>
-                                        <th>
-                                            buttons...
-                                        </th>
+                                        <th>Task</th>
+                                        <th>Description</th>
+                                        <th>Deadline</th>
+                                        <th>Status</th>
+                                        <th>Importance</th>
+                                        <th>Executors</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
                                         tasks.map((task,index)=>{
                                             return (
-                                                <tr key={index} > 
-                                                    <td>{task.taskName}</td>
-                                                    <td>{task.description}</td>
+                                                <tr key={index} className="task"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setShowEditTaskForm(!showEditTaskForm);
+                                                    setTaskToEdit(task);
+                                                }}> 
+                                                    <td className="taskTitle">{task.taskName}</td>
+                                                    <td className="taskTitle">{task.description}</td>
                                                     <td>{new Date(task.deadline).toDateString()}</td>
                                                     <td>{colorStatus(task.status)}</td>
-                                                    <td>{colorImportance(task.importance)}</td>
+                                                    <td className="taskImportance">{colorImportance(task.importance)}</td>
                                                     <td>
                                                         <ul>
                                                             {task.assignedUsers.map(user=>(<li>{user}</li>))}
                                                         </ul>
                                                     </td>
-                                                    <td><button onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setShowEditTaskForm(!showEditTaskForm);
-                                                        setTaskToEdit(task);
-                                                    }}>
-                                                        Edit
-                                                    </button>
-                                                    <button onClick={(e)=>{
+                                                    <td>
+                                                    <button className="deleteTask" onClick={(e)=>{
                                                         handleDeleteButton(e, task._id, task.taskName);
                                                     }}>
                                                         Delete
@@ -172,14 +157,13 @@ export default function TasksPage({socket}) {
                             </Table>
                         </div>
                     </div>
-                    <div className="sideBar">
-                        <img className="userpic" src={user.picture} alt={user.name} />
+                    <div className="sideBarTasks">
+                        <img className="userpicTasks" src={user.picture} alt={user.name} />
                         <br />
-                        <h2 className="username">{user.name.toUpperCase()}</h2>
-                        <div className="buttonList">
-                            <button className="elseButton">Profile</button>
-                            <button className="createButton">Projects </button>
-                            <button className="elseButton">Sign Out</button>
+                        <h2 className="usernameTasks">{user.name.toUpperCase()}</h2>
+                        <div className="buttonListTasks">
+                            <button  onClick={()=> { navigate(`/${teamId}/projects-page`) }} className="createButtonTasks">Projects </button>
+                            <button  onClick={()=> { logout({returnTo: window.location.origin})}}className="elseButtonTasks">Sign Out</button>
                         </div>
                     </div>
                 </div>
