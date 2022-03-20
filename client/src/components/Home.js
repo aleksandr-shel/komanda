@@ -40,7 +40,7 @@ const Home = () => {
         <img src={homeProfile} className='homeProfilePicHome' alt="You Profile Picture" />
         {isUser && user.name ? 
         (<h2 className='loggedUserNameHome'>{user.name.toUpperCase()}</h2>) 
-        : (<h2 className='loggedUserNameHome'>You! Yes, you!</h2>)}
+        : (<h2 className='notloggedUserNameHome'>You! Yes, you!</h2>)}
        
         <button className='profileButtonHome'>Profile</button>
       </div>
