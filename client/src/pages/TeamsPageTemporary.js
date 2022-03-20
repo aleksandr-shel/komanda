@@ -14,8 +14,7 @@ import {Breadcrumb} from 'react-bootstrap';
 export default function TeamsPage() {
 
     const { user } = useAuth0();
-
-    let { isAuthenticated } = useAuth0();
+    let { isAuthenticated, logout } = useAuth0();
 
     const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
 
@@ -88,9 +87,8 @@ export default function TeamsPage() {
                         <br />
                         <h2 className="usernameTeams">{user.name.toUpperCase()}</h2>
                         <div className="buttonListTeams">
-                            <button className="elseButtonTeams">Profile</button>
-                            <button className="createButtonTeams">Home </button>
-                            <button className="elseButtonTeams">Sign Out</button>
+                            <button onClick={()=> { navigate('/') }} className="createButtonTeams">Home </button>
+                            <button className="elseButtonTeams"  onClick={() => { logout({  returnTo: window.location.origin})}}>Sign Out</button>
                         </div>
                     </div>
                     <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm} />
