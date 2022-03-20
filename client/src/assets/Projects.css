@@ -3,100 +3,97 @@
     color: #333333;
 }
 
-#wrapper {
+#wrapperProjects {
     overflow: hidden;
 }
-#wrapperTutorial {
-    width: 80%;
-    height: 1000px;
-    margin: auto;
-    overflow: hidden;
-}
+
 h5{
     font-weight: lighter;
-    margin-top: 3%;
     margin-left: 10px;
 }
-.sideBar {
+.sideBarProjects {
     float: left;
     margin: 10%;
-    margin-top: 13%;
+    margin-bottom: 0%;
+    margin-top: 6%;
     max-width: 40%;
 }
-.userpic{
+.userpicProjects{
     margin-bottom: 15%;
     margin-left: 80px;
     width: 150px;
 }
 
-.projects{
+.projectsProjects{
     display: inline-block;
-    margin: 10%;
-    margin-top: 10%;
-}
-.listofprojects {
     max-width: 1000px;
-    max-height: 550px;
+    margin: 10%;
+    margin-bottom: 0%;
+    margin-left: 5%;
+    margin-top:6%;
+}
+.listofProjectsProjects {
+    width: 770px;
+    max-width: 770px;
+    max-height: 450px;
     margin-top: 5%;
     overflow-y: scroll;
 }
 
-.project {
+.projectProjects {
     display: inline-block;
-    width: 450px;
-    height: 250px;
+    width: 350px;
+    height: 200px;
     background-color: #e6e6e6;
+    border-color: #333333;
+    border-width: thin;
     border-radius: 10px;
-    margin: 10px;
+    margin: 1%;
     padding: 20px;
 }
 
-.project:hover{
+.projectProjects:hover{
     background-color: lightgray;
     cursor: pointer;
 }
 
-.teamsTitle {
+.ProjectsTitleProjects {
     width: 720px;
 }
 
-.plusSign {
-    margin-top: 30px;
+.plusSignProjects {
+    margin-top: 5%;
     font-weight: lighter;
     text-align: center;
 }
-
-.addText {
+.addTextProjects {
     text-align: center;
     margin: auto;
-    font-size: 40px;
+    font-size: 30px;
 }
-
-.addProject {
-    cursor: pointer;
+.addprojectProjects {
     float: left;
-    width: 450px;
-    height: 250px;
+    width: 350px;
+    height: 200px;
     background-color: #e6e6e6;
     border-color: #333333;
     border-style: dashed;
     border-width: thin;
     border-radius: 10px;
-    margin: 10px;
+    margin:1%;
     padding: 20px;
 }
-
-.addTeam:hover {
+.addprojectProjects:hover {
     background-color: #33333352;
     color: white;
     transition: all .2s ease;
 }
 
-.buttonList {
+.buttonListProjects {
     width: 300px;
 }
 
-.username{
+.usernameProjects{
     margin: 0;
     max-width:300px;
     text-align: center;
@@ -106,42 +103,43 @@ h5{
     text-overflow: ellipsis;
 }
 
-.projectName{
-    margin-left: 5px;
-    margin-top: 5px;
-    font-size: 40px;
+.projectNameProjects{
+    font-size: 30px;
     text-align: left;
-    margin-bottom: 10px;
 }
 
-p {
+.detailsProjects {
+    margin-top: -6%;
     font-size: 16px;
-    margin-bottom: 0;
+}
+.detailsUsersProjects {
+    margin-top: -6%;
+    margin-bottom: -5%;
+    font-size: 16px;
 }
 
-.addMemberButton {
+.projectMembersButtonProjects {
     background-color: #e6e6e6;
     border-radius: 50px;
     border-color: #333333;
     font-weight: bold;
     padding: 5px;
+    margin-top: -10%;
     font-size: 15px;
     width: 150px;
 }
 
-.addMemberButton:hover {
+.projectMembersButtonProjects:hover {
     background-color: #333333;
     color: #e6e6e6;
     transition: all .2s ease;
 }
-
-.addMemberButton:active {
+.projectMembersButtonProjects:active {
     background-color:  #e6e6e6;
     color:#333333;
     transition: all .2s ease;
 }
-
-.createButton {
+.createButtonProjects {
     background-color: white;
     border-radius: 50px;
     border-color: #333333;
@@ -151,19 +149,16 @@ p {
     width: 300px;
     margin-top: 30px;
 }
-
-.createButton:hover {
+.createButtonProjects:hover {
     background-color: #333333;
     color: white;
     transition: all .2s ease;
- }
-
- .createButton:active {
+}
+ .createButtonProjects:active {
     background-color: white;
     color: #333333;
- }
-
- .elseButton {
+}
+ .elseButtonProjects {
     background-color: white;
     border-radius: 50px;
     border-color: #e6e6e6;
@@ -173,14 +168,12 @@ p {
     width: 300px;
     margin-top: 30px;
 }
-
-.elseButton:hover {
+.elseButtonProjects:hover {
     background-color: #e6e6e6;
     color: white;
     transition: all .2s ease;
- }
-
- .elseButton:active {
+}
+ .elseButtonProjects:active {
     background-color: white;
     color: #e6e6e6;
- }
+}

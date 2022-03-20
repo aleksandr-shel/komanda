@@ -15,7 +15,7 @@ export default function ProjectsPage() {
     const { user } = useAuth0();
     const {teamId} = useParams();
 
-    let { isAuthenticated } = useAuth0();
+    let { isAuthenticated, logout } = useAuth0();
 
     const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
 
@@ -45,40 +45,39 @@ export default function ProjectsPage() {
     if (isAuthenticated) {
         return (
         <>
-            <div id='wrapper'>
+            <div id='wrapperProjects'>
                 <Breadcrumb>
                     <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                     <Breadcrumb.Item href="/teams-page">Teams Page</Breadcrumb.Item>
                     <Breadcrumb.Item active>Projects Page</Breadcrumb.Item>
                 </Breadcrumb>
-                <div className="projects">
-                    <h1>/{team.teamName}\ Projects</h1>
-                    <h5>Here is a list of projects created by /Team Name\...</h5>
-                    <div className="listofproject">
-                        <div className="addProject" onClick={()=>setShowCreateProjectForm(true)}>
-                            <h1 className="plusSign">+</h1>
-                            <h2 className="addText"> Add New Project</h2>
+                <div className="projectsProjects">
+                    <h1>{team.teamName} Projects</h1>
+                    <h5>Here is a list of projects created by {team.teamName}...</h5>
+                    <div className="listofProjectsProjects">
+                        <div className="addprojectProjects" onClick={()=>setShowCreateProjectForm(true)}>
+                            <h1 className="plusSignProjects">+</h1>
+                            <h2 className="addTextProjects"> Add New Project</h2>
                         </div>
                         {
                             projectsList.map((project, index)=>(
-                                <div key={index} onClick={()=>{selectProject(project._id)}} className="project">
-                                    <h2 className="projectName">{project.projectName}</h2>
+                                <div key={index} onClick={()=>{selectProject(project._id)}} className="projectProjects">
+                                    <h2 className="projectNameProjects">{project.projectName}</h2>
                                     <br />
-                                    <p>Number of Tasks: {project.tasks.length}</p>
+                                    <p className="detailsProjects">Number of Tasks: {project.tasks.length}</p>
                                     <br /><br /><br />
                                 </div>
                             ))
                         }
                     </div>
                 </div>
-                <div className="sideBar">
-                    <img className="userpic" src={user.picture} alt={user.name} />
+                <div className="sideBarProjects">
+                    <img className="userpicProjects" src={user.picture} alt={user.name} />
                     <br/>
-                    <h2 className="username">{user.name.toUpperCase()}</h2>
-                    <div className="buttonList">
-                        <button className="elseButton">Profile</button>
-                        <button className="createButton">Teams </button>
-                        <button className="elseButton">Sign Out</button>
+                    <h2 className="usernameProjects">{user.name.toUpperCase()}</h2>
+                    <div className="buttonListProjects">
+                        <button onClick={()=> { navigate('/teams-page') }}  className="createButtonProjects">Teams </button>
+                        <button className="elseButtonProjects" onClick={() => { logout({  returnTo: window.location.origin})}}>Sign Out</button>
                     </div>
                 </div>
             </div>
