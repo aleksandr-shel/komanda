@@ -3,99 +3,103 @@
     color: #333333;
 }
 
-#wrapper {
+#wrapperTeams {
     overflow: hidden;
 }
-#wrapperTutorial {
+#wrapperTutorialTeams {
     width: 80%;
     height: 1000px;
     margin: auto;
     overflow: hidden;
+
 }
 h5{
     font-weight: lighter;
-    margin-top: 3%;
     margin-left: 10px;
 }
-.sideBar {
+.sideBarTeams {
     float: left;
     margin: 10%;
-    margin-top: 13%;
+    margin-bottom: 0%;
+    margin-top: 6%;
     max-width: 40%;
 }
-.userpic{
+.userpicTeams{
     margin-bottom: 15%;
     margin-left: 80px;
     width: 150px;
 }
 
-.teams{
+.teamsTeams{
     display: inline-block;
     margin: 10%;
-    margin-top: 10%;
+    margin-bottom: 0%;
+    margin-left: 5%;
+    margin-top:6%;
 }
-.listofteams {
-    max-width: 1000px;
-    max-height: 550px;
+.listofteamsTeams {
+    max-width: 770px;
+    max-height: 450px;
     margin-top: 5%;
     overflow-y: scroll;
 }
 
-.team {
+.teamTeams {
     display: inline-block;
-    width: 450px;
-    height: 250px;
-    background-color: #e6e6e6;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 20px;
-}
-
-.team:hover{
-    background-color: lightgray;
-    cursor: pointer;
-}
-
-.teamsTitle {
-    width: 720px;
-}
-
-.plusSign {
-    margin-top: 30px;
-    font-weight: lighter;
-    text-align: center;
-}
-
-.addText {
-    text-align: center;
-    margin: auto;
-    font-size: 40px;
-}
-
-.addTeam {
-    float: left;
-    width: 450px;
-    height: 250px;
+    width: 350px;
+    height: 200px;
     background-color: #e6e6e6;
     border-color: #333333;
     border-style: dashed;
     border-width: thin;
     border-radius: 10px;
-    margin: 10px;
+    margin: 1%;
     padding: 20px;
+
 }
 
-.addTeam:hover {
+.teamTeams:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.teamsTitleTeams {
+    width: 720px;
+}
+
+.plusSignTeams {
+    margin-top: 5%;
+    font-weight: lighter;
+    text-align: center;
+}
+.addTextTeams {
+    text-align: center;
+    margin: auto;
+    font-size: 30px;
+}
+.addTeamTeams {
+    float: left;
+    width: 350px;
+    height: 200px;
+    background-color: #e6e6e6;
+    border-color: #333333;
+    border-style: dashed;
+    border-width: thin;
+    border-radius: 10px;
+    margin:1%;
+    padding: 20px;
+}
+.addTeamTeams:hover {
     background-color: #33333352;
     color: white;
     transition: all .2s ease;
 }
 
-.buttonList {
+.buttonListTeams {
     width: 300px;
 }
 
-.username{
+.usernameTeams{
     margin: 0;
     max-width:300px;
     text-align: center;
@@ -105,42 +109,43 @@ h5{
     text-overflow: ellipsis;
 }
 
-.teamName{
-    margin-left: 5px;
-    margin-top: 5px;
-    font-size: 40px;
+.teamNameTeams{
+    font-size: 30px;
     text-align: left;
-    margin-bottom: 10px;
 }
 
-p {
+.detailsTeams {
+    margin-top: -6%;
     font-size: 16px;
-    margin-bottom: 0;
+}
+.detailsUsersTeams {
+    margin-top: -6%;
+    margin-bottom: -5%;
+    font-size: 16px;
 }
 
-.teamMembersButton {
+.teamMembersButtonTeams {
     background-color: #e6e6e6;
     border-radius: 50px;
     border-color: #333333;
     font-weight: bold;
     padding: 5px;
+    margin-top: -10%;
     font-size: 15px;
     width: 150px;
 }
 
-.teamMembersButton:hover {
+.teamMembersButtonTeams:hover {
     background-color: #333333;
     color: #e6e6e6;
     transition: all .2s ease;
 }
-
-.teamMembersButton:active {
+.teamMembersButtonTeams:active {
     background-color:  #e6e6e6;
     color:#333333;
     transition: all .2s ease;
 }
-
-.createButton {
+.createButtonTeams {
     background-color: white;
     border-radius: 50px;
     border-color: #333333;
@@ -150,19 +155,16 @@ p {
     width: 300px;
     margin-top: 30px;
 }
-
-.createButton:hover {
+.createButtonTeams:hover {
     background-color: #333333;
     color: white;
     transition: all .2s ease;
- }
-
- .createButton:active {
+}
+ .createButtonTeams:active {
     background-color: white;
     color: #333333;
- }
-
- .elseButton {
+}
+ .elseButtonTeams {
     background-color: white;
     border-radius: 50px;
     border-color: #e6e6e6;
@@ -172,14 +174,12 @@ p {
     width: 300px;
     margin-top: 30px;
 }
-
-.elseButton:hover {
+.elseButtonTeams:hover {
     background-color: #e6e6e6;
     color: white;
     transition: all .2s ease;
- }
-
- .elseButton:active {
+}
+ .elseButtonTeams:active {
     background-color: white;
     color: #e6e6e6;
- }
+}

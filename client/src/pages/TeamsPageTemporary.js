@@ -47,30 +47,30 @@ export default function TeamsPage() {
     if (isAuthenticated) {
         return (
             <div>
-                <div id='wrapper'>
+                <div id='wrapperTeams'>
                     <Breadcrumb>
                         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
                         <Breadcrumb.Item active>Teams Page</Breadcrumb.Item>
                     </Breadcrumb>
-                    <div className="teams">
+                    <div className="teamsTeams">
                         <h1>Your Current Teams:</h1>
                         <h5>Here is a list of teams that you are a part of...</h5>
-                        <div className="listofteams">
-                            <div className="addTeam" onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
-                                <h1 className="plusSign">+</h1>
-                                <h2 className="addText"> Add New Team</h2>
+                        <div className="listofteamsTeams">
+                            <div className="addTeamTeams" onClick={() => setShowCreateTeamForm(!showCreateTeamForm)}>
+                                <h1 className="plusSignTeams">+</h1>
+                                <h2 className="addTextTeams"> Add New Team</h2>
                             </div>
                             {teamsList.map((team, index) => {
                                 return (
-                                    <div onClick={()=>{selectTeam(team._id)}} className="team" key={index}>
-                                        <h2 className="teamName">{team.teamName}</h2>
+                                    <div onClick={()=>{selectTeam(team._id)}} className="teamTeams" key={index}>
+                                        <h2 className="teamNameTeams">{team.teamName}</h2>
                                         <br />
                                         {userId === team.teamOwner ?
-                                            (<p>Owner: <AiOutlineCrown size={24} /></p>) :
-                                            (<p>Owner: {team.teamOwner}</p>)}
-                                        <p>Number of Users: {team.users.length}</p>
+                                            (<p className="detailsTeams">Owner: <AiOutlineCrown size={24} /></p>) :
+                                            (<p className="detailsTeams">Owner: {team.teamOwner}</p>)}
+                                        <p className="detailsUsersTeams">Number of Users: {team.users.length}</p>
                                         <br />
-                                        <button className="teamMembersButton" onClick={(e) => {
+                                        <button className="teamMembersButtonTeams" onClick={(e) => {
                                             e.stopPropagation();
                                             setShowChangeMembersForm(!showChangeMembersForm);
                                             setTeamId(team._id);
@@ -83,14 +83,14 @@ export default function TeamsPage() {
                                 )
                             })}</div>
                     </div>
-                    <div className="sideBar">
-                        <img className="userpic" src={user.picture} alt={user.name} />
+                    <div className="sideBarTeams">
+                        <img className="userpicTeams" src={user.picture} alt={user.name} />
                         <br />
-                        <h2 className="username">{user.name.toUpperCase()}</h2>
-                        <div className="buttonList">
-                            <button className="elseButton">Profile</button>
-                            <button className="createButton">Teams </button>
-                            <button className="elseButton">Sign Out</button>
+                        <h2 className="usernameTeams">{user.name.toUpperCase()}</h2>
+                        <div className="buttonListTeams">
+                            <button className="elseButtonTeams">Profile</button>
+                            <button className="createButtonTeams">Home </button>
+                            <button className="elseButtonTeams">Sign Out</button>
                         </div>
                     </div>
                     <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm} />
