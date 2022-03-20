@@ -3,8 +3,7 @@
     color: #333333;
 }
 
-#wrapper {
-    border: 1px solid black;
+#wrapperHome {
     overflow: hidden;
 }
 #wrapperTutorial {
@@ -14,13 +13,14 @@
     overflow: hidden;
 }
 
-.description {
+.descriptionHome {
     margin: 10%;
     max-width: 40%;
     float:left;
 }
 
-.loginButton {
+.loginButtonHome {
+    margin-left: 14%;
     margin-top: 2%;
     background-color: white;
     border-radius: 50px;
@@ -31,24 +31,20 @@
     width: 150px;
 }
 
-.loggedUserName {
-    font-size: 30px;
-    margin-left: -8%;
-    margin-top: 5%;
-}
 
-.loginButton:hover {
+
+.loginButtonHome:hover {
     background-color: #333333;
     color: white;
     transition: all .2s ease;
  }
 
- .loginButton:active {
+ .loginButtonHome:active {
     background-color: white;
     color: #333333;
  }
 
-.homeButton {
+.homeButtonHome {
     background-color: white;
     border-radius: 50px;
     border-color: #333333;
@@ -58,18 +54,18 @@
     width: 230px;
 }
 
-.homeButton:hover {
+.homeButtonHome:hover {
     background-color: #333333;
     color: white;
     transition: all .2s ease;
  }
 
- .homeButton:active {
+ .homeButtonHome:active {
     background-color: white;
     color: #333333;
  }
 
-.mainLogo {
+.mainLogoHome {
     margin-top: 15px;
     width: 450px;
     padding-bottom: 40px;
@@ -80,18 +76,19 @@ h1 {
 }
 
 
-.sideProfile {
+.sideProfileHome {
     overflow: hidden;
     margin: 10%;
+    margin-top: 5%;
     padding-left: 8%;
-    height: 510px;
+    height: 52%;
+
 }
 
-h2 {
+.loggedUserNameHome {
     font-size: 30px;
-    margin-left: 8%;
-    margin-top: 5%;
-    width: fit-content;
+    margin-left: 10%;
+    margin-top: 8%;
 }
 
 p {
@@ -100,21 +97,22 @@ p {
     margin-bottom: 5%;
 }
 
-.tutorialVideo {
+.tutorialVideoHome {
     height: auto;
     margin: auto;
     float:left;
+    padding-bottom: 10%;
 }
 
-.tutorialText {
+.tutorialTextHome {
     height: 405px;
-    margin-right: 8%;
-    width: 50%;
+    margin-right: 15%;
+    width: 35%;
     float: right;
     overflow: hidden;
 }
 
-.tutorialTitle {
+.tutorialTitleHome {
     margin: auto;
     margin-left: 35%;
     padding-bottom: 50px;
@@ -122,26 +120,28 @@ p {
 
 iframe {
     border-radius: 20px;
+    margin-left: 30%;
+
 }
 
-.profileButton {
+.profileButtonHome {
     background-color: white;
     border-radius: 50px;
     border-color: #e6e6e6;
     font-weight: bold;
     padding: 15px;
     font-size: 25px;
-    margin-top: 6%;
+    margin-top: 3%;
     width: 300px;
 }
 
-.profileButton:hover {
+.profileButtonHome:hover {
     background-color: #e6e6e6;
     color: white;
     transition: all .2s ease;
  }
 
- .profileButton:active {
+ .profileButtonHome:active {
     background-color: white;
     color: #e6e6e6;
  }
