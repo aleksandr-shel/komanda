@@ -103,7 +103,7 @@ export function EditTaskForm({ toShow, setToShow, task, setTasks, socket}) {
     return (
         <FormContainer style={{ display: toShow ? 'flex' : 'none' }} onClick={() => { setToShow(false) }}>
             <div className="form-container" onClick={e => e.stopPropagation()}>
-                <h1>Add task</h1>
+                <h1>Edit task</h1>
                 <div>
                     <label>
                         Task:
@@ -122,6 +122,16 @@ export function EditTaskForm({ toShow, setToShow, task, setTasks, socket}) {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Description" />
+                </div>
+                <div>
+                    <label>
+                        Status:
+                    </label>
+                    <select value={status} onChange={e => setStatus(e.target.value)}>
+                        <option value="Pending">Pending</option>
+                        <option value="In-progress">In-progress</option>
+                        <option value="Finished">Finished</option>
+                    </select>
                 </div>
                 <div>
                     <label>

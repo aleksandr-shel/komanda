@@ -8,7 +8,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList, sock
 
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('Pending');
     const [importance, setImportance] = useState('Medium');
     const [deadline, setDeadline] = useState('');
     const [assignedUsers, setAssignedUsers] = useState([]);
@@ -41,7 +41,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList, sock
         axios.post('/api/tasks/create',{
             taskName,
             description,
-            status: "Started",
+            status,
             project:projectId,
             importance,
             deadline,
@@ -60,6 +60,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList, sock
         setTaskName('');
         setDeadline('');
         setDescription('');
+        setStatus('Pending');
         setImportance('Medium');
     }
 
@@ -103,6 +104,16 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList, sock
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Description" />
+                </div>
+                <div>
+                    <label>
+                        Status:
+                    </label>
+                    <select value={status} onChange={e => setStatus(e.target.value)}>
+                        <option value="Pending">Pending</option>
+                        <option value="In-progress">In-progress</option>
+                        <option value="Finished">Finished</option>
+                    </select>
                 </div>
                 <div>
                     <label>
