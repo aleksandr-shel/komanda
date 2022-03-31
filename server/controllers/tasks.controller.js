@@ -62,7 +62,7 @@ const createTask = async (req, res) => {
       (err) => {
         if (err) {
           return res
-            .status(200)
+            .status(400)
             .send('could not update project or project was not found');
         }
       }
@@ -72,12 +72,19 @@ const createTask = async (req, res) => {
   });
 };
 
-const getTask = async (req, res) => {};
+const getTask = async (req, res) => {
+  Task.findById(req.params.taskId, (err, result)=>{
+    if(err){
+      return res.status(400).send(err);
+    }
+    return res.status(200).send(result);
+  })
+};
 
 const deleteTask = async (req, res) => {
   Task.findByIdAndDelete(req.params.taskId, (err, result) => {
     if (err) {
-      res.status(400).send(err);
+      return res.status(400).send(err);
     } else {
       //removing task id from its identical project
       Project.updateOne(
