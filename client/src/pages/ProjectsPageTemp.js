@@ -5,27 +5,34 @@ import { useEffect } from "react";
 import axios from 'axios';
 //import crown from '../assets/images/crown.svg'
 import { useAuth0 } from "@auth0/auth0-react";
-import { useParams } from "react-router-dom";
-import {Breadcrumb} from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
-import { CreateProjectForm } from "../components";
+import {Breadcrumb, CloseButton} from 'react-bootstrap';
+import { useNavigate, Link, useParams, useLocation } from "react-router-dom";
+import { CreateProjectForm, DeleteProjectForm } from "../components";
 
-export default function ProjectsPage() {
+export default function ProjectsPage({socket}) {
 
     const { user } = useAuth0();
     const {teamId} = useParams();
 
     let { isAuthenticated, logout } = useAuth0();
 
-    const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
+    // const userId = isAuthenticated ? user?.sub.split('|')[1] : null;
 
     const [showCreateProjectForm, setShowCreateProjectForm] = useState(false);
     const [projectsList, setProjectsList] = useState([]);
     const [team, setTeam] = useState({});
 
+    const [showDeleteProjectForm, setShowDeleteProject] = useState(false);
+    const [projectIdToDelete, setProjectIdToDelete] = useState('');
+    const [projectNameToDelete, setProjectNameToDelete] = useState('');
+
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
+        if (teamId !==null){
+            socket.emit('joinProjectsPage', {teamId})
+        }
         async function getTeamProjects() {
             if (teamId) {
                 const result = await axios.get(`/api/projects/${teamId}`)
@@ -33,13 +40,35 @@ export default function ProjectsPage() {
                 axios.get(`/api/teams/${teamId}`).then(result=>{
                     setTeam(result.data);
                 })
+                socket.emit('leaveTasksPageRooms', result.data)
             }
         }
         getTeamProjects();
     }, [])
 
+    useEffect(()=>{
+        socket.on('project-added', (project)=>{
+            setProjectsList(projects => [...projects, project])
+        })
+        socket.on('project-deleted', ({projectId})=>{
+            setProjectsList(projects=> projects.filter(project=>project._id !==projectId))
+        })
+    },[socket])
+
+    useEffect(()=>{
+        console.log('navigating');
+        console.log(window.location)
+    },[window.location])
+
     function selectProject(projectId){
         navigate(`/${teamId}/${projectId}/tasks-page`)
+    }
+
+    function deleteProject(e, projectId, projectName){
+        e.stopPropagation();
+        setShowDeleteProject(true);
+        setProjectIdToDelete(projectId);
+        setProjectNameToDelete(projectName);
     }
 
     if (isAuthenticated) {
@@ -47,8 +76,8 @@ export default function ProjectsPage() {
         <>
             <div id='wrapperProjects'>
                 <Breadcrumb>
-                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                    <Breadcrumb.Item href="/teams-page">Teams Page</Breadcrumb.Item>
+                    <Breadcrumb.Item linkAs={Link} linkProps={{to:'/'}}>Home</Breadcrumb.Item>
+                    <Breadcrumb.Item linkAs={Link} linkProps={{to:'/teams-page'}}>Teams Page</Breadcrumb.Item>
                     <Breadcrumb.Item active>Projects Page</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="projectsProjects">
@@ -61,7 +90,10 @@ export default function ProjectsPage() {
                         </div>
                         {
                             projectsList.map((project, index)=>(
-                                <div key={index} onClick={()=>{selectProject(project._id)}} className="projectProjects">
+                                <div style={{position:'relative'}} key={index} onClick={()=>{selectProject(project._id)}} className="projectProjects">
+                                    <div style={{position:'absolute', top:'2px', right:'2px'}} onClick={(e)=>{deleteProject(e, project._id, project.projectName)}}>
+                                        <CloseButton />
+                                    </div>
                                     <h2 className="projectNameProjects">{project.projectName}</h2>
                                     <br />
                                     <p className="detailsProjects">Number of Tasks: {project.tasks.length}</p>
@@ -81,7 +113,8 @@ export default function ProjectsPage() {
                     </div>
                 </div>
             </div>
-            <CreateProjectForm toShow={showCreateProjectForm} setToShow={setShowCreateProjectForm} teamId={teamId} setProjectsList={setProjectsList}/>
+            <CreateProjectForm toShow={showCreateProjectForm} setToShow={setShowCreateProjectForm} teamId={teamId} setProjectsList={setProjectsList} socket={socket}/>
+            <DeleteProjectForm toShow={showDeleteProjectForm} setToShow={setShowDeleteProject} projectName={projectNameToDelete} projectId={projectIdToDelete} teamId={teamId} setProjects={setProjectsList} socket={socket}/>
         </>
         )
     } else {

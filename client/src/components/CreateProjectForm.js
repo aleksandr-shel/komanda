@@ -4,18 +4,22 @@ import { useState } from "react";
 import axios from "axios";
 
 
-export default function CreateProjectForm({toShow, setToShow, teamId, setProjectsList}){
+export default function CreateProjectForm({toShow, setToShow, teamId, setProjectsList, socket}){
 
     const [projectName, setProjectName] = useState('');
 
 
     async function handleCreateProjectButton(){
-        const result = await axios.post('/api/projects/create',{
+        axios.post('/api/projects/create',{
             projectName,
             team: teamId
+        }).then(response=>{
+            setProjectsList(projects => [...projects, response.data])
+            socket.emit('addProject', response.data)
+            setProjectName('');
+            setToShow(false);
+
         })
-        setProjectsList(projects => [...projects, result.data])
-        setToShow(false);
     }
 
     return (

@@ -10,8 +10,10 @@ import ChangeTeamMembersForm from '../components/ChangeTeamMembersForm';
 import { AiOutlineCrown } from "react-icons/ai"
 import { useNavigate } from "react-router-dom";
 import {Breadcrumb} from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
-export default function TeamsPage() {
+
+export default function TeamsPage({socket}) {
 
     const { user } = useAuth0();
     let { isAuthenticated, logout } = useAuth0();
@@ -33,6 +35,8 @@ export default function TeamsPage() {
             if (userId) {
                 const result = await axios.get(`/api/users/${userId}/teams`)
                 setTeamsList(result.data);
+                console.log(result.data);
+                socket.emit('leaveProjectsPage', result.data)
             }
         }
         getUserTeams();
@@ -48,7 +52,7 @@ export default function TeamsPage() {
             <div>
                 <div id='wrapperTeams'>
                     <Breadcrumb>
-                        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item linkAs={Link} linkProps={{to:'/'}}>Home</Breadcrumb.Item>
                         <Breadcrumb.Item active>Teams Page</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="teamsTeams">

@@ -73,7 +73,7 @@ const deleteProject = async(req,res)=>{
 
     Project.findOneAndRemove({_id:projectId}, (err, project)=>{
         if (err){
-            res.status(400).send(err);
+            return res.status(400).send(err);
         }
 
         Team.findOneAndUpdate(
@@ -82,18 +82,18 @@ const deleteProject = async(req,res)=>{
             {new:true},
             (err)=>{
                 if (err){
-                    res.status(400).send({err,message:'team was not updated'});
+                    return res.status(400).send({err,message:'team was not updated'});
                 }
             }
         )
 
         Task.deleteMany({project: projectId}, (err)=>{
             if (err){
-                res.status(400).send({err, message:'could delete tasks related to a project'})
+                return res.status(400).send({err, message:'could delete tasks related to a project'})
             }
         })
 
-        res.status(200).send({success:true});
+        res.status(200).send(project);
     })
 }
 
@@ -110,10 +110,34 @@ const getProject = async(req,res)=>{
     })
 }
 
+
+const handleRealTimeProjects = (socket)=>{
+    socket.on('joinProjectsPage', ({teamId})=>{
+        // console.log('joined projects page with id ' + teamId)
+        socket.join(teamId);
+    })
+
+    socket.on('addProject', (project)=>{
+        socket.broadcast.to(project?.team).emit('project-added', project)
+    })
+
+    socket.on('deleteProject', ({projectId, teamId})=>{
+        socket.broadcast.to(teamId).emit('project-deleted',{projectId})
+    })
+
+    socket.on('leaveProjectsPage', (teams)=>{
+        // console.log('leaving ' + teams.map(team=>team._id))
+        teams.forEach(team=>{
+            socket.leave(team._id)
+        })
+    })
+}
+
 module.exports = {
     createProject,
     getTeamProjects,
     getAllProjects,
     deleteProject,
-    getProject
+    getProject,
+    handleRealTimeProjects
 }

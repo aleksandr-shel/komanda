@@ -10,7 +10,7 @@ import {Breadcrumb} from 'react-bootstrap';
 import { Table } from "react-bootstrap";
 import { CreateTaskForm, DeleteTaskForm, EditTaskForm } from "../components";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 export default function TasksPage({socket}) {
 
@@ -81,10 +81,12 @@ export default function TasksPage({socket}) {
 
     function colorStatus(status){
         switch(status){
-            case "Completed":
-                return <span style={{backgroundColor:'green'}}>{status}</span>
-            case "In progress":
-                return <span style={{backgroundColor:'orange'}}>{status}</span>
+            case "Finished":
+                return <span style={{backgroundColor:"#A8DC89", borderRadius:'10%', paddingTop: '2%',paddingRight:'10%', paddingLeft: '10%'}}>{status}</span>
+            case "Pending":
+                return <span style={{backgroundColor:"#E17070", borderRadius:'10%', paddingTop: '2%',paddingRight:'10%', paddingLeft: '10%'}}>{status}</span>
+            case "In-progress":
+                return <span style={{backgroundColor:"#FFCD1D", borderRadius:'10%', paddingTop: '2%'}}>{status}</span>
             default:
                 return <span>{status}</span>
         }
@@ -102,9 +104,9 @@ export default function TasksPage({socket}) {
             <div>
                 <div id='wrapperTasks'>
                     <Breadcrumb>
-                        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                        <Breadcrumb.Item href="/teams-page">Teams Page</Breadcrumb.Item>
-                        <Breadcrumb.Item href={`/${teamId}/projects-page`}>Projects Page</Breadcrumb.Item>
+                        <Breadcrumb.Item linkAs={Link} linkProps={{to:'/'}}>Home</Breadcrumb.Item>
+                        <Breadcrumb.Item linkAs={Link} linkProps={{to:`/teams-page`}}>Teams Page</Breadcrumb.Item>
+                        <Breadcrumb.Item linkAs={Link} linkProps={{to:`/${teamId}/projects-page`}}>Projects Page</Breadcrumb.Item>
                         <Breadcrumb.Item active>Tasks Page</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="tasks">

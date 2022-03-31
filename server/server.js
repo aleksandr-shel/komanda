@@ -3,6 +3,7 @@ let debug = require('debug')('api:server')
 let http = require('http')
 const socket = require('socket.io');
 const tasksCtrl = require('./controllers/tasks.controller');
+const projectsCtrl = require('./controllers/projects.controller')
 
 /**
  * Get port from environment and store in Express.
@@ -29,6 +30,7 @@ const io = socket(server, { cors: { origin: "*" } });
 
 io.on('connection', (socket)=>{
   tasksCtrl.handleRealTimeTasks(socket);
+  projectsCtrl.handleRealTimeProjects(socket);
 })
 
 

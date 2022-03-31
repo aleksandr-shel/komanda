@@ -127,7 +127,7 @@ const updateTask = async (req, res) => {
 const handleRealTimeTasks = (socket)=>{
     // console.log('connected');
     socket.on('joinTasksPage', ({projectId})=>{
-      console.log('joined project with id: ' + projectId)
+      // console.log('joined tasks page with id: ' + projectId)
       socket.join(projectId);
     })
 
@@ -143,6 +143,13 @@ const handleRealTimeTasks = (socket)=>{
     socket.on('updateTask', (task)=>{
       socket.broadcast.to(task?.project).emit('task-updated', task)
     })
+
+    socket.on('leaveTasksPageRooms', (projects)=>{
+      projects.forEach(project=>{
+        socket.leave(project._id)
+      })
+    })
+
 }
 
 
