@@ -158,3 +158,42 @@ iframe {
     background-color: white;
     color: #e6e6e6;
  }
+
+.contactUs {
+    width: 30vw;
+    margin: 75vh auto 10vh auto;
+ }
+
+.contactUs input, textarea {
+    min-width: 400px;
+    width: 30vw;
+    padding: 1%;
+    margin: 1% auto;
+    font-size: 16px;
+ }
+
+.contactUs textarea {
+    min-height: 12vh;
+ }
+ 
+.contactUs button {
+    background-color: white;
+    border-radius: 50px;
+    border-color: #333333;
+    font-weight: bold;
+    padding: 1%;
+    font-size: 20px;
+    min-width: 100px;
+    width: 30%;
+}
+
+.contactUs button:hover {
+    background-color: #333333;
+    color: white;
+    transition: all .2s ease;
+ }
+
+ .contactUs button:active {
+    background-color: white;
+    color: #333333;
+ }
