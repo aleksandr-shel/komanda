@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import CreateTeamForm from '../components/CreateTeamForm';
 import '../assets/Teams.css'
 import { useEffect } from "react";
 import axios from 'axios';
@@ -9,9 +8,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import ChangeTeamMembersForm from '../components/ChangeTeamMembersForm';
 import { AiOutlineCrown } from "react-icons/ai"
 import { useNavigate } from "react-router-dom";
-import {Breadcrumb} from 'react-bootstrap';
+import {Breadcrumb, CloseButton} from 'react-bootstrap';
 import { Link } from "react-router-dom";
-
+import { CreateTeamForm, DeleteTeamForm } from "../components";
 
 export default function TeamsPage({socket}) {
 
@@ -22,13 +21,14 @@ export default function TeamsPage({socket}) {
 
     const navigate = useNavigate();
     const [showCreateTeamForm, setShowCreateTeamForm] = useState(false);
+    const [showDeleteTeamForm, setShowDeleteTeamForm] = useState(false);
     const [teamsList, setTeamsList] = useState([]);
+    const [teamIdToDelete, setTeamIdToDelete] = useState('');
+    const [teamNameToDelete, setTeamNameToDelete] = useState('');
 
     const [showChangeMembersForm, setShowChangeMembersForm] = useState(false);
 
     let [teamId, setTeamId] = useState();
-
-    
 
     useEffect(() => {
         async function getUserTeams() {
@@ -41,6 +41,13 @@ export default function TeamsPage({socket}) {
         }
         getUserTeams();
     }, [userId, showCreateTeamForm])
+
+    function deleteTeam(e, teamId, teamName){
+        e.stopPropagation();
+        setShowDeleteTeamForm(true);
+        setTeamIdToDelete(teamId);
+        setTeamNameToDelete(teamName);
+    }
 
 
     function selectTeam(teamId){
@@ -65,7 +72,11 @@ export default function TeamsPage({socket}) {
                             </div>
                             {teamsList.map((team, index) => {
                                 return (
-                                    <div onClick={()=>{selectTeam(team._id)}} className="teamTeams" key={index}>
+                                    <div style={{position:'relative'}} onClick={()=>{selectTeam(team._id)}} className="teamTeams" key={index}>
+                                        
+                                        <div style={{position:'absolute', top:'2px', right:'2px'}} onClick={(e)=>{deleteTeam(e, team._id, team.teamName)}}>
+                                            <CloseButton />
+                                        </div>
                                         <h2 className="teamNameTeams">{team.teamName}</h2>
                                         <br />
                                         {userId === team.teamOwner ?
@@ -96,6 +107,7 @@ export default function TeamsPage({socket}) {
                         </div>
                     </div>
                     <CreateTeamForm toShow={showCreateTeamForm} setToShow={setShowCreateTeamForm} />
+                    <DeleteTeamForm toShow={showDeleteTeamForm} setToShow={setShowDeleteTeamForm} teamName={teamNameToDelete} teamId={teamIdToDelete} setTeams={setTeamsList}/>
                     <ChangeTeamMembersForm toShow={showChangeMembersForm} setToShow={setShowChangeMembersForm} teamId={teamId} userId={userId} />
                 </div>
             </div>

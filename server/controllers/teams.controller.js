@@ -1,5 +1,6 @@
 let Team = require('../models/team');
-
+let Project = require('../models/project');
+let Task = require('../models/task');
 let User = require('../models/user');
 
 const getTeams = async (req, res) => {
@@ -100,6 +101,37 @@ const deleteTeam = async (req,res)=>{
     //2) delete tasks 
     //3) delete any reference id to this team for each user
     //and so on
+    const {teamId} = req.params;
+    Team.findByIdAndDelete({_id:teamId},(err, team)=>{
+        if (err){
+            return res.status(400).send(err);
+        }
+        team.projects.forEach(projectId=>{
+            Project.findOneAndRemove({_id:projectId}, (err, project)=>{
+                if (err){
+                    return res.status(400).send(err);
+                }
+        
+                Task.deleteMany({project: projectId}, (err)=>{
+                    if (err){
+                        return res.status(400).send({err, message:'could delete tasks related to a project'})
+                    }
+                })
+            })
+        })  
+        team.users.forEach(userId=>{
+            User.findOneAndUpdate(
+                {_id:userId},
+                {$pull:{teams:teamId}},
+                (err)=>{
+                    if (err){
+                        return res.status(400).send(err)
+                    }
+                }
+            )
+        })
+        return res.status(200).send(team)
+    })
 }
 module.exports = {
     getTeams,

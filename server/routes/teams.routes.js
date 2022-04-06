@@ -17,6 +17,6 @@ router.get('/:teamId/users', teamsCtrl.getTeamMembers)
 
 router.get('/:teamId', teamsCtrl.getTeam)
 
-router.delete('/delete/:teamId', teamsCtrl.deleteTeam)
+router.delete('/:teamId', teamsCtrl.deleteTeam)
 
 module.exports = router

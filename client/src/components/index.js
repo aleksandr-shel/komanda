@@ -6,4 +6,5 @@ import { EditTaskForm } from './EditTaskForm';
 import { CreateTaskForm } from './CreateTaskForm';
 import { DeleteTaskForm } from './DeleteTaskForm';
 import { DeleteProjectForm } from './DeleteProjectForm';
-export { Registration, CreateTeamForm, Home, CreateProjectForm, EditTaskForm, CreateTaskForm, DeleteTaskForm, DeleteProjectForm};
+import { DeleteTeamForm } from './DeleteTeamForm';
+export { Registration, CreateTeamForm, Home, CreateProjectForm, EditTaskForm, CreateTaskForm, DeleteTaskForm, DeleteProjectForm, DeleteTeamForm};
