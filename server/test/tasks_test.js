@@ -2,6 +2,7 @@ const request = require("supertest");
 const app = require("../config/app");
 
 let taskId = '';
+const projectId = '624638871b44d32e19039ad9';
 // API tests
 describe("POST /api/tasks/create", function () {
   it("Adds a task", function (done) {
@@ -12,7 +13,7 @@ describe("POST /api/tasks/create", function () {
         taskName: "API test 01",
         description: "API unit testing",
         status: "processing",
-        project: "62456982873f2311d17b1515",
+        project: projectId,
         deadline: Date.now(),
         assignedUsers: ["621b177de013710011684ec5"],
         importance: "Medium",

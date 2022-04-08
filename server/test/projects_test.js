@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../config/app");
 
 let projectId = '';
-
+const teamId = '624638801b44d32e19039ad2';
 
 describe("POST /api/projects/create", function () {
     it("Adds a project", function (done) {
@@ -11,7 +11,7 @@ describe("POST /api/projects/create", function () {
         .post("/api/projects/create")
         .send({
             projectName:'Project API test', 
-            team: '621fd9b18158bf0e4d68815e'
+          team: teamId
         })
         .expect(200)
         .end((err, res)=>{
