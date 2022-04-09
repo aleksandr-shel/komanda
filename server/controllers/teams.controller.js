@@ -69,14 +69,16 @@ const changeTeamMembers = async (req, res) => {
 
 
 const getTeamMembers = async (req, res) => {
-    Team.findById(req.params.teamId, (err, team) => {
+    Team.findById(req.params.teamId, async (err, team) => {
         if (err) {
             console.log(err);
             res.send('error occurred' + err);
         } else {
+            const userObjects = await User.find({ '_id': { $in: team.users } }); //get all users by ID that are in usersIdList
             res.send({
                 usersArrayTemp: team.users,
-                teamOwnerTemp: team.teamOwner
+                teamOwnerTemp: team.teamOwner,
+                userObjects
             });
         }
     })

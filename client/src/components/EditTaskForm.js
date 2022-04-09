@@ -32,9 +32,9 @@ export function EditTaskForm({ toShow, setToShow, task, setTasks, socket}) {
         if (teamId) {
             axios.get(`/api/teams/${teamId}/users`)
                 .then(res => {
-                    const { usersArrayTemp } = res.data;
+                    const { userObjects } = res.data;
 
-                    setTeamMembers(usersArrayTemp);
+                    setTeamMembers(userObjects);
                 })
         }
     }, [teamId])
@@ -81,16 +81,16 @@ export function EditTaskForm({ toShow, setToShow, task, setTasks, socket}) {
             teamMembers.map((user, index) => {
                 return (
                     <div key={index}>
-                        {assignedUsers.includes(user)
+                        {assignedUsers.includes(user._id)
                             ?
                             <>
-                                <input type="checkbox" id={user} value={user} onChange={handleCheckboxChange} checked />
-                                <label htmlFor={user}>{user}</label>
+                                <input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} checked />
+                                <label htmlFor={user}>{user.email}</label>
                             </>
                             :
                             <>
-                                <input type="checkbox" id={user} value={user} onChange={handleCheckboxChange} />
-                                <label htmlFor={user}>{user}</label>
+                                <input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} />
+                                <label htmlFor={user._id}>{user.email}</label>
                             </>
 
                         }

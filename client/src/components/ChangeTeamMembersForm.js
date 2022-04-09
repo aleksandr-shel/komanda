@@ -18,9 +18,9 @@ export default function ChangeTeamMembersForm({ toShow, setToShow, teamId, userI
         if (teamId) {
             axios.get(`/api/teams/${teamId}/users`)
                 .then(res => {
-                    const { usersArrayTemp, teamOwnerTemp } = res.data;
+                    const { usersArrayTemp, teamOwnerTemp, userObjects } = res.data;
 
-                    setInitialTeamMembers(usersArrayTemp);
+                    setInitialTeamMembers(userObjects);
                     setChosenUsers(usersArrayTemp);
 
                     setTeamOwner(teamOwnerTemp);
@@ -91,7 +91,7 @@ export default function ChangeTeamMembersForm({ toShow, setToShow, teamId, userI
                 initialTeamMembers.map((user, index) => {
                     return (
                         <div key={index}>
-                            {user}
+                            {user.email}
                         </div>
                     )
                 }))
@@ -101,13 +101,20 @@ export default function ChangeTeamMembersForm({ toShow, setToShow, teamId, userI
     return (
         <FormContainer style={{ display: toShow ? 'flex' : 'none' }} onClick={()=>setToShow(false)}>
             <div className="form-container" onClick={e=>e.stopPropagation()}>
-                <h1>Choose a Person</h1>
+                {userId === teamOwner
+                    ? <h1>Choose a Person</h1>
+                    : <h1>Team Members</h1>
+                }              
 
                 <div>
                     {renderUsersList()}
                 </div>
                 {userId === teamOwner
-                    ? < button onClick={handleAddMembersButton}>Change Team Composition</button>
+                    ?
+                    <>
+                        < button onClick={handleAddMembersButton}>Change Team Composition</button>
+                        < button onClick={() => setToShow(false)} >Close</button>
+                    </>
                     : < button onClick={() => setToShow(false)} >Close</button>
                 }
             </div>
