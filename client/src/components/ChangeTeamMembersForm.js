@@ -12,6 +12,7 @@ export default function ChangeTeamMembersForm({ toShow, setToShow, teamId, userI
     }, [])
 
     let [initialTeamMembers, setInitialTeamMembers] = useState([]); //array of initial team members
+    let [initialTeamMembersId, setInitialTeamMembersId] = useState([]);
     let [chosenUsers, setChosenUsers] = useState([]);
     let [teamOwner, setTeamOwner] = useState();
     useEffect(() => {
@@ -20,8 +21,9 @@ export default function ChangeTeamMembersForm({ toShow, setToShow, teamId, userI
                 .then(res => {
                     const { usersArrayTemp, teamOwnerTemp, userObjects } = res.data;
 
-                    setInitialTeamMembers(userObjects);
+                    setInitialTeamMembers(usersArrayTemp);
                     setChosenUsers(usersArrayTemp);
+                    setInitialTeamMembersId(userObjects);
 
                     setTeamOwner(teamOwnerTemp);
                 })
@@ -88,7 +90,7 @@ export default function ChangeTeamMembersForm({ toShow, setToShow, teamId, userI
             )
         } else {
             return (
-                initialTeamMembers.map((user, index) => {
+                initialTeamMembersId.map((user, index) => {
                     return (
                         <div key={index}>
                             {user.email}
