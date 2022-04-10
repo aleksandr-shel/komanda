@@ -52,8 +52,8 @@ const Home = () => {
           </div>
           <div className='tutorialTextHome'>
             <h1 className='tutorialTitleHome'>Tutorial</h1>
-            <p>Want to dive in and experience everything first hand? Here is a quick tutorial that will introduce to to the basics of this application.</p>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+            <p>Want to dive in and experience everything first hand? Here is a quick tutorial that will introduce you to the basics of this application.</p>
+            <p>All functionalities will be available to you right after registration for free! You will be able to create Teams with other users, Projects to collaborate with your team members and Tasks to plan and manage your workflow. </p>
           </div>
         </div>
 
