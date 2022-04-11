@@ -62,6 +62,7 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList, sock
         setDescription('');
         setStatus('Pending');
         setImportance('Medium');
+        setAssignedUsers([]);
     }
 
     //USED FOR DEBUGGING
@@ -74,7 +75,12 @@ export function CreateTaskForm({toShow, setToShow, projectId, setTasksList, sock
             teamMembers.map((user, index) => {
                 return (
                     <div key={index}>
-                        <input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} />
+                        {assignedUsers.includes(user._id)
+                        ?
+                            <input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} checked />
+                        :
+                            <input type="checkbox" id={user._id} value={user._id} onChange={handleCheckboxChange} />
+                        }
                         <label htmlFor={user._id}>{user.email}</label>
                     </div >
                 )
