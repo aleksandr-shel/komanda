@@ -46,9 +46,10 @@ const Home = () => {
         </div>
         <div id='wrapperTutorialHome'>
           <div className='tutorialVideoHome'>
-            <iframe width="600" height="400"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ">
-            </iframe>
+            <iframe width="600" height="400" src="https://www.youtube.com/embed/rSc4J3tmuIQ"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
           </div>
           <div className='tutorialTextHome'>
             <h1 className='tutorialTitleHome'>Tutorial</h1>
